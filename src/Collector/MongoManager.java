@@ -51,7 +51,7 @@ public class MongoManager {
                 items.insert(basicOBJ);
                 System.out.println("Storing was a success");
             } catch (Exception e) {
-                System.out.println("Could not store Tweet" + e.getMessage());
+                System.out.println("Could not store Tweet please try again" + e.getMessage());
                 
             }
 
