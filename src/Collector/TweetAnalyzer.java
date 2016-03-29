@@ -20,8 +20,8 @@ public class TweetAnalyzer {
     TwitterConnector connector;
     TweetCollector tweetCollector;
     PreProcessor process;
-    private static List<Status> statuses ;
-    List<Double> sessionScores ;
+    private static List<Status> statuses;
+    List<Double> sessionScores;
 
     public TweetAnalyzer() {
         manager = new SentiWordNetManager();
@@ -33,12 +33,12 @@ public class TweetAnalyzer {
 
     public static void main(String[] args) {
         TweetAnalyzer tn = new TweetAnalyzer();
-        
+
         for (Status a : statuses) {
             if ("en".equals(a.getLang())) {
                 String tweet = PreProcessor.normalizeTweet(a.getText());
                 //calculateTweetScore(tweet);
-                calculateTweetpolarity(tweet); 
+                calculateTweetpolarity(tweet);
             }
         }
 
@@ -67,34 +67,30 @@ public class TweetAnalyzer {
 //        System.out.println(tw + avg);
 //
 //    }
-
     public static void calculateTweetpolarity(String tw) {
         StringTokenizer tweet = new StringTokenizer(tw);
         List<String> words = new ArrayList<>();
-        
+
         SentiWordNetManager swn = new SentiWordNetManager();
-        
-         while (tweet.hasMoreElements()) {
+
+        while (tweet.hasMoreElements()) {
             String nextword = (String) tweet.nextElement();
             words.add(nextword);
         }
-        
+
         double score = swn.calculateSentancescore(words);
-        
-        System.out.println(tw+","+score);
-       
+        System.out.println(tw + "," + score);
     }
-    
-    public static void calculateAveragePolarity(List<Double> sc)
-    {
+
+    public static void calculateAveragePolarity(List<Double> sc) {
         List<Double> scores = new ArrayList<>();
-        double sum =0.0;
+        double sum = 0.0;
         for (Double score : scores) {
             sum = sum + score;
         }
-        double avg =0.0;
+        double avg = 0.0;
         avg = sum / scores.size();
-        System.out.println("Average :"+ sum);
+        System.out.println("Average :" + sum);
     }
 
 }

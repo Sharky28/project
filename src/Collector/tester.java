@@ -17,7 +17,7 @@ import sun.misc.Regexp;
 public class tester {
 
     public static void main(String[] args) {
-        String tweet = "@wpmoneymaker -  bad";
+        String tweet = "good bad ugly";
         //   Pattern p = Pattern.compile("http://*https://*www.*ftp://*ssh://*@");
         // Matcher m = p.matcher(tweet);
         // boolean b = m.matches();
@@ -25,8 +25,19 @@ public class tester {
         SentiWordNetManager sm = new SentiWordNetManager();
        
         String s = normalizeTweet(tweet);
-         System.out.println(sm.calculateWordScore(s));
+        StringTokenizer reader = new StringTokenizer(s);
+        double sum=0.0;
+        while (reader.hasMoreElements()) {
+            String nextWord =reader.nextToken();
+            System.out.println(nextWord +","+sm.calculateWordScore(nextWord));
+            sum = sum +sm.calculateWordScore(nextWord);
+            
+        }
+        
         System.out.println(s);
+        
+        System.out.println("sum"+sum);
+        System.out.println("average");
 
         String t = removeURL(tweet);
       //  System.out.println(t);
@@ -64,7 +75,7 @@ public class tester {
                 .replaceAll("\n", " ")
                 .replaceAll("[^\\p{L}\\p{N} ]+", " ")
                 .replaceAll(" +", " ")
-                .replaceAll("(.)\\1+", "$1")
+               // .replaceAll("(.)\\1+", "$1")
                 .trim();
 
         return s;
