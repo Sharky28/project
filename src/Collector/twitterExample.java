@@ -36,7 +36,7 @@ public class twitterExample {
 
     public static void main(String[] args) {
         long amountOfTweets = 0;
-       Class cl = tcc.getClass();
+  
        
 
         twitterExample te = new twitterExample();

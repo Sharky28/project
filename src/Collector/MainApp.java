@@ -19,37 +19,40 @@ import twitter4j.Status;
 public class MainApp {
 
     ///TwitterConnector connector;
-    TweetCollector tweetCollector;
-    PreProcessor process;
+    static TweetCollector tweetCollector;
+    static PreProcessor process;
+   
     private static MainApp app;
 
     private static List<Status> statuses;
 
     public MainApp() {
-        tweetCollector = new TweetCollector();
-        
-        statuses = tweetCollector.printTimeLine("CNN");
        
-        for (Status statuse : statuses) {
-            String tweet =PreProcessor.normalizeTweet(statuse.getText());
-            System.out.println(tweet);
-        }
-        System.out.println(">>>>>>>>");
+       
+      //  for (Status statuse : statuses) {
+         //   String tweet =PreProcessor.normalizeTweet(statuse.getText());
+          //  System.out.println(tweet);
+     //   }
+     //   System.out.println(">>>>>>>>");
         
        
 
     }
 
     public static void main(String[] args) {
-        MongoDbConnector.initMongoDB();
         app = new MainApp();
+        
+         tweetCollector = new TweetCollector();
+        
+        
+        
+        
+        
 //        process();
 //        process2();
 //        process3();
-        MongoManager manager = new MongoManager();
-        List<Status> tweets = statuses;
-        MongoManager.storeTweets(tweets);
-
+        
+        
     }
 
     public static void process() {
