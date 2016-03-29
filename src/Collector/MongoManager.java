@@ -26,7 +26,7 @@ public class MongoManager {
         connection = new MongoDbConnector();
         DB db = MongoDbConnector.getDB();
         items = db.getCollection("tweetcoll");
-
+    
     }
 
     public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class MongoManager {
             basicOBJ.put("tweet_text", tweet.getText());
 
             try {
-                items.insert(basicOBJ);
+                items.insert(basicOBJ);             
                 System.out.println("Storing was a success");
             } catch (Exception e) {
                 System.out.println("Could not store Tweet please try again" + e.getMessage());

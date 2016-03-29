@@ -17,19 +17,22 @@ import sun.misc.Regexp;
 public class tester {
 
     public static void main(String[] args) {
-        String tweet = "@wpmoneymaker - ftp://wow ftps://ok wa waa waaa waaaa Find your presidential match. http://t.co/uRi6u0Ktnr https://t.co/VFrktm68Je #JohnKasich #Kasich";
+        String tweet = "@wpmoneymaker -  bad";
         //   Pattern p = Pattern.compile("http://*https://*www.*ftp://*ssh://*@");
         // Matcher m = p.matcher(tweet);
         // boolean b = m.matches();
         // System.out.println(b);
-
+        SentiWordNetManager sm = new SentiWordNetManager();
+       
         String s = normalizeTweet(tweet);
-      // // System.out.println("");
+         System.out.println(sm.calculateWordScore(s));
+        System.out.println(s);
 
         String t = removeURL(tweet);
       //  System.out.println(t);
         //removes "http://foo" "https://bar"
-        percentageChange((float) 6201.1, (float) 6189.6);
+        // percentageChange((float) 6201.1, (float) 6189.6);
+
     }
 
     public static String removeURL(String atweet) { // atweet is the given tweet to be preprocessed
@@ -66,7 +69,7 @@ public class tester {
 
         return s;
     }
-    
+
     public static void percentageChange(float x, float y) {
         if (x < y) {
             float increace = y - x;

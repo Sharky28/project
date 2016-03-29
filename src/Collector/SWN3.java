@@ -46,8 +46,7 @@ public class SWN3 {
                 String[] words = data[4].split(" ");
                 for (String w : words) {
                     String[] w_n = w.split("#");
-					// w_n[0] += "#" + data[0];
-                    // int index = Integer.parseInt(w_n[1]) - 1;
+		
                     if (_temp.containsKey(w_n[0])) {
                         Double v = _temp.get(w_n[0]);
                         _temp.put(w_n[0], (v + score) / 2);
@@ -79,6 +78,20 @@ public class SWN3 {
         }
         return score;
     }
+    public Double extract2(String word)
+{
+    Double total = new Double(0);
+    if(_dict.get(word+"#n") != null)
+         total = _dict.get(word+"#n") + total;
+    if(_dict.get(word+"#a") != null)
+        total = _dict.get(word+"#a") + total;
+    if(_dict.get(word+"#r") != null)
+        total = _dict.get(word+"#r") + total;
+    if(_dict.get(word+"#v") != null)
+        total = _dict.get(word+"#v") + total;
+    return total;
+}
+    
 
     public double extractSentence(List<String> sentence) {
         double d = 0.0d;

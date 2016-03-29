@@ -5,6 +5,8 @@
  */
 package Collector;
 
+import java.util.List;
+
 
 
 /**
@@ -33,5 +35,11 @@ public class SentiWordNetManager {
       
        double score=  swn.extract(word);
        return score;
+    }
+    
+    public double calculateSentancescore(List<String> sentance)
+    {
+        double score = swn.extractSentence(sentance);
+        return score;
     }
 }
