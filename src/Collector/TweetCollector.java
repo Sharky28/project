@@ -33,6 +33,7 @@ public class TweetCollector {
     private static twitter4j.Twitter twitter;
 
     private static MongoDbConnector connection;
+    // put mongo stuff in dbconnection class
     private static DBCollection items;
     private static List<Status> statuses;
 
@@ -43,6 +44,7 @@ public class TweetCollector {
         connection = new MongoDbConnector();
         DB db = connection.getDB();
         items = db.getCollection("tweetcoll");
+        statuses = new ArrayList<>();
 
     }
 
@@ -50,13 +52,12 @@ public class TweetCollector {
 
         TweetCollector tcc = new TweetCollector();
         statuses = getTweets("Apple");
-        storeTweets(statuses);
+
     }
 
     public static List<Status> getTweets(String q) {
 
         long amountOfTweets = 0;
-        statuses = new ArrayList<>();
 
         try {
 
@@ -98,6 +99,8 @@ public class TweetCollector {
                     if (maxID == -1 || s.getId() < maxID) {
                         maxID = s.getId();
                     }
+                    storeTweet(s);
+
                     System.out.printf("At%s , @%-20s said : %s\n",
                             s.getCreatedAt().toString(),
                             s.getUser().getScreenName(),
@@ -105,11 +108,8 @@ public class TweetCollector {
                     searchTweetLimit = result.getRateLimitStatus();
                     System.out.printf("\n\nA total of %d tweet retrieved\n", amountOfTweets);
 
-                    statuses.add(s);
-
                 }
 
-                storeTweets(statuses);
             }
 
         } catch (Exception ex) {
@@ -141,28 +141,27 @@ public class TweetCollector {
         return null;
     }
 
-    public static void storeTweets(List<Status> tweets) {
+    public static void storeTweet(Status tweet) {
 
-        for (Status tweet : tweets) {
-            BasicDBObject basicOBJ = new BasicDBObject();
-            basicOBJ.put("user_name", tweet.getUser().getScreenName());
-            basicOBJ.put("retweet_count", tweet.getRetweetCount());
-            basicOBJ.put("tweet_followers_count", tweet.getUser().getFollowersCount());
-            UserMentionEntity[] mentioned = tweet.getUserMentionEntities();
-            basicOBJ.put("tweet_mentioned_count", mentioned.length);
-            basicOBJ.put("tweet_ID", tweet.getId());
-            basicOBJ.put("tweet_text", tweet.getText());
+        BasicDBObject basicOBJ = new BasicDBObject();
+        basicOBJ.put("user_name", tweet.getUser().getScreenName());
+        basicOBJ.put("retweet_count", tweet.getRetweetCount());
+        basicOBJ.put("tweet_followers_count", tweet.getUser().getFollowersCount());
+        UserMentionEntity[] mentioned = tweet.getUserMentionEntities();
+        basicOBJ.put("tweet_mentioned_count", mentioned.length);
+        basicOBJ.put("tweet_ID", tweet.getId());
+        basicOBJ.put("tweet_text", tweet.getText());
 
-            try {
-                items.insert(basicOBJ);
+        try {
+            items.insert(basicOBJ);
 
-            } catch (Exception e) {
-                System.out.println("Could not store Tweet please try again" + e.getMessage());
-
-            }
+        } catch (Exception e) {
+            System.out.println("Could not store Tweet please try again" + e.getMessage());
 
         }
 
     }
 
 }
+
+

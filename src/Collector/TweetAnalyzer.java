@@ -21,7 +21,7 @@ public class TweetAnalyzer {
     TweetCollector tweetCollector;
     PreProcessor process;
     private static List<Status> statuses;
-    List<Double> sessionScores;
+    private static List<Double> sessionScores;
 
     public TweetAnalyzer() {
         manager = new SentiWordNetManager();
@@ -41,6 +41,8 @@ public class TweetAnalyzer {
                 calculateTweetpolarity(tweet);
             }
         }
+        calculateAveragePolarity(sessionScores);
+        
 
     }
 
@@ -79,11 +81,12 @@ public class TweetAnalyzer {
         }
 
         double score = swn.calculateSentancescore(words);
+        sessionScores.add(score);
         System.out.println(tw + "," + score);
     }
 
     public static void calculateAveragePolarity(List<Double> sc) {
-        List<Double> scores = new ArrayList<>();
+        List<Double> scores = sc;
         double sum = 0.0;
         for (Double score : scores) {
             sum = sum + score;

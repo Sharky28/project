@@ -5,6 +5,8 @@
  */
 package Collector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +19,7 @@ import sun.misc.Regexp;
 public class tester {
 
     public static void main(String[] args) {
-        String tweet = "good bad ugly";
+        String tweet = "very good day";
         //   Pattern p = Pattern.compile("http://*https://*www.*ftp://*ssh://*@");
         // Matcher m = p.matcher(tweet);
         // boolean b = m.matches();
@@ -26,23 +28,36 @@ public class tester {
        
         String s = normalizeTweet(tweet);
         StringTokenizer reader = new StringTokenizer(s);
-        double sum=0.0;
-        while (reader.hasMoreElements()) {
-            String nextWord =reader.nextToken();
-            System.out.println(nextWord +","+sm.calculateWordScore(nextWord));
-            sum = sum +sm.calculateWordScore(nextWord);
-            
-        }
-        
-        System.out.println(s);
-        
-        System.out.println("sum"+sum);
-        System.out.println("average");
+       
+//            String nextWord =reader.nextToken();
+//            System.out.println(nextWord +","+sm.calculateWordScore(nextWord));
+//            sum = sum +sm.calculateWordScore(nextWord);
+//            
+//        }
+//        
+//        System.out.println(s);
+//        
+//        System.out.println("sum"+sum);
+//        System.out.println("average");
 
-        String t = removeURL(tweet);
+       // String t = removeURL(tweet);
+        
+       // double x = -0.333;
+       // double neg =-1.0;
+       // System.out.println(x+","+neg*x);
       //  System.out.println(t);
         //removes "http://foo" "https://bar"
         // percentageChange((float) 6201.1, (float) 6189.6);
+        
+        String a = "not";
+        String b = "great";
+        List<String> words = new ArrayList<>();
+        words.add(a);
+        words.add(b);
+        System.out.println(sm.calculateWordScore(a));
+        System.out.println(sm.calculateWordScore(b));
+        System.out.println(sm.calculateSentancescore(words));
+        sm.handleNegation(words);
 
     }
 

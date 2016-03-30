@@ -9,7 +9,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -53,11 +58,60 @@ public class SentiWordNetManager {
     public double calculateWordScore(String word) {
 
         double score = swn.extract(word);
-        return score;
+        DecimalFormat df = new DecimalFormat("#.###");
+        return Double.valueOf(df.format(score));
     }
 
     public double calculateSentancescore(List<String> sentance) {
-        double score = swn.extractSentence(sentance);
-        return score;
+        HashMap<String, Double> dictionary = swn.getDictionary();
+        double score = 0.0d;
+
+        for (String word : sentance) {
+            //check not a negation word
+            double neg =-1.0;
+            if (!negations.contains(word)) {
+                if (dictionary.get(word) != null) {
+                    score += dictionary.get(word);
+                }
+            }
+            if(negations.contains(word)){
+                
+                double negatedScore = dictionary.get(word)*neg;
+                score += negatedScore;
+            }
+
+        }
+
+        DecimalFormat df = new DecimalFormat("#.###");
+        return Double.valueOf(df.format(score));
+
+    }
+    
+    public void handleNegation(List<String> input)
+    {
+        double[] originalScore = new double[input.size()];
+        double [] newScores = new double[input.size()];
+        double newScore =0.0;
+        double neg =-1;
+        String[] words = new String[input.size()];
+        for (int i = 0; i < input.size(); i++) {
+            String temp = input.get(i);
+            words[i]=temp;
+        }
+        for (int x = 0; x < input.size(); x++) {
+            if(!negations.contains(words[x]))
+            {
+                originalScore[x]= swn.getDictionary().get(words[x]);
+                System.out.println(Arrays.toString(originalScore));
+            }
+            if(negations.contains(words[x]))
+            {
+               String wordToBeFlipped = words[x]+1;
+               newScore= swn.getDictionary().get(wordToBeFlipped)*neg;
+               newScores[x+1] = newScore;
+                System.out.println(Arrays.toString(newScores));
+            }
+        }
+       
     }
 }

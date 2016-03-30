@@ -90,4 +90,9 @@ public class SWN3 {
         }
         return d;
     }
+    
+   public HashMap<String, Double> getDictionary()
+   {
+       return _dict;
+   }
 }
