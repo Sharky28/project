@@ -80,7 +80,7 @@ public class TweetAnalyzer {
             words.add(nextword);
         }
 
-        double score = swn.calculateSentancescore(words);
+        double score = swn.calculateSentancescore(tw);
         sessionScores.add(score);
         System.out.println(tw + "," + score);
     }

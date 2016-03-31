@@ -25,10 +25,10 @@ public class tester {
         // boolean b = m.matches();
         // System.out.println(b);
         SentiWordNetManager sm = new SentiWordNetManager();
-       
+
         String s = normalizeTweet(tweet);
         StringTokenizer reader = new StringTokenizer(s);
-       
+
 //            String nextWord =reader.nextToken();
 //            System.out.println(nextWord +","+sm.calculateWordScore(nextWord));
 //            sum = sum +sm.calculateWordScore(nextWord);
@@ -39,25 +39,27 @@ public class tester {
 //        
 //        System.out.println("sum"+sum);
 //        System.out.println("average");
-
        // String t = removeURL(tweet);
-        
        // double x = -0.333;
-       // double neg =-1.0;
-       // System.out.println(x+","+neg*x);
-      //  System.out.println(t);
+        // double neg =-1.0;
+        // System.out.println(x+","+neg*x);
+        //  System.out.println(t);
         //removes "http://foo" "https://bar"
         // percentageChange((float) 6201.1, (float) 6189.6);
+        sm.contains("not");
+        sm.removeNegationsFromDict();
+        sm.contains("not");
+        System.out.println(">>>>>");
+        sm.loadIntensifiers();
+        sm.contains("very");
+        sm.removeIntensifiersFromDict();
+        sm.contains(s);
+       
         
-        String a = "not";
-        String b = "great";
-        List<String> words = new ArrayList<>();
-        words.add(a);
-        words.add(b);
-        System.out.println(sm.calculateWordScore(a));
-        System.out.println(sm.calculateWordScore(b));
-        System.out.println(sm.calculateSentancescore(words));
-        sm.handleNegation(words);
+        System.out.println(sm.calculateWordScore("great"));
+        System.out.println(sm.calculateSentancescore("not great"));
+        //sm.handleNegation(words);
+        //sm.printNegations();
 
     }
 
@@ -90,7 +92,7 @@ public class tester {
                 .replaceAll("\n", " ")
                 .replaceAll("[^\\p{L}\\p{N} ]+", " ")
                 .replaceAll(" +", " ")
-               // .replaceAll("(.)\\1+", "$1")
+                // .replaceAll("(.)\\1+", "$1")
                 .trim();
 
         return s;
