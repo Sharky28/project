@@ -5,9 +5,11 @@
  */
 package Collector;
 
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.StringTokenizer;
 import twitter4j.Status;
 
@@ -17,24 +19,25 @@ import twitter4j.Status;
  */
 public class TweetAnalyzer {
 
-    SentiWordNetManager manager;
     TwitterConnector connector;
     TweetCollector tweetCollector;
     PreProcessor process;
+
     private static List<Status> statuses;
     private static List<Double> sessionScores;
-    private static Lexicons collections;
-    private static double neg = 1.0;
-    private static int intens = 0;
-    private static double[] intensifierarray = new double[20];
+
+    private static Lexicons lex;
 
     public TweetAnalyzer() {
-        manager = new SentiWordNetManager();
+
         tweetCollector = new TweetCollector();
         process = new PreProcessor();
+        // need maybe another class/method  to retrive a given amount of tweets,
+        //cant have one method collecting /storing/returning
         statuses = TweetCollector.printTimeLine("CNN");
         sessionScores = new ArrayList<Double>();
-        collections = new Lexicons();
+        lex = new Lexicons();
+
     }
 
     public static void main(String[] args) {
@@ -44,7 +47,7 @@ public class TweetAnalyzer {
             if ("en".equals(a.getLang())) {
                 String tweet = PreProcessor.normalizeTweet(a.getText());
                 //calculateTweetScore(tweet);
-                calculateSentancescore(tweet);
+                System.out.println(tweet + tn.calculateTweetPolarity(tweet));
 
             }
         }
@@ -75,33 +78,38 @@ public class TweetAnalyzer {
 //        System.out.println(tw + avg);
 //
 //    }
-    public static double calculateSentancescore(String tweet) {
+    public static double calculateTweetPolarity(String tweet) {
 
         double score = 0.0d;
+        double neg = 1.0;
+        int intens = 0;
+        double[] intensifierarray = new double[20];
 
         StringTokenizer tokenizer = new StringTokenizer(tweet);
         while (tokenizer.hasMoreElements()) {
             String nextWord = (String) tokenizer.nextElement();
-            if (collections.intensifiers.get(nextWord) != null) {
+            if (lex.intensifiers.get(nextWord) != null) {
                 //storing each intensifying word in an array to handle cases like "very very good"
-                intensifierarray[intens++] = collections.intensifiers.get(nextWord);
+                intensifierarray[intens++] = lex.intensifiers.get(nextWord);
 
             }
-            if (collections.getDictionary().get(nextWord) != null) {
+            if (lex.getDictionary().get(nextWord) != null) {
                 for (int a = 0; a < intens; a++) {
-                    //the value of the next words sentiment is multiplied by each intensifier 
-                    score = score + (collections.getDictionary().get(nextWord) * intensifierarray[a]);
+                    //the value of the next words sentiment is multiplied by each intensifier
+                    score = score + (lex.getDictionary().get(nextWord) * intensifierarray[a]);
                     intensifierarray[a] = 0.0; // empty the array so as to not influence later features
                 }
                 // always multiply by the value of neg , should be 1.0 if no negations found
-                score = score + (neg * collections.getDictionary().get(nextWord));
-                neg = 1;//ensures it stays one 
+                score = score + (neg * lex.getDictionary().get(nextWord));
+                neg = 1;//ensures it stays one
 
-            } else if (collections.getNegations().contains(nextWord)) {
-                //negation found so make the value of neg a negative 
+            } else if (lex.getNegations().contains(nextWord)) {
+                //negation found so make the value of neg a negative
                 neg = (-1.0) * neg;
             }
         }
+        // collects all scores in order to calculate average
+        sessionScores.add(score);
         //trims the double
         DecimalFormat df = new DecimalFormat("#.###");
         return Double.valueOf(df.format(score));

@@ -9,7 +9,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,20 +21,23 @@ import java.util.Map;
  */
 public class Lexicons {
 
-   
-
     private  String sentiWordNetFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\SentiWordNet_3.0.0_20130122.txt";
-    private  String negationsFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\negations.txt";
-    private  String intensifiersFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\intensifiers.txt";
+    private String negationsFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\negations.txt";
+    private String intensifiersFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\intensifiers.txt";
 
-    private Map<String, Double> dictionary;
-    private List<String> negations;
-    Map<String, Double> intensifiers;
+    Map<String, Double> dictionary;
+    List<String> negations;
+    static Map<String, Double> intensifiers;
 
-    private final SWN3 swn = new SWN3(sentiWordNetFile);
+    private final SWN3 swn;
 
     public Lexicons() {
+        swn = new SWN3(sentiWordNetFile);
+        dictionary = new HashMap<String, Double>();
+        negations = new ArrayList<String>();
+        intensifiers = new HashMap<String, Double>();
         try {
+            
             loadDictionary();
             loadNegations();
             removeNegationsFromDict();
@@ -44,6 +49,10 @@ public class Lexicons {
             System.out.println("Please check files are in correct locations");
         }
 
+    }
+
+    public static void main(String[] args) {
+      
     }
 
     public Map<String, Double> getDictionary() {
@@ -98,7 +107,7 @@ public class Lexicons {
             reader.close();
         }
     }
-    
+
     public void removeIntensifiersFromDict() {
         Collection<String> coll = intensifiers.keySet();
         for (String negation : coll) {
@@ -107,15 +116,13 @@ public class Lexicons {
             }
         }
     }
-    
-     public void removeNegationsFromDict() {
+
+    public void removeNegationsFromDict() {
         for (String negation : negations) {
             if (dictionary.containsKey(negation)) {
                 dictionary.remove(negation);
             }
         }
     }
-    
-    
 
 }
