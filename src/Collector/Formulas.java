@@ -70,6 +70,11 @@ public class Formulas {
             }
         }
     }
+    
+    public float [][] getArray()
+    {
+        return dataArray;
+    }
 
     //print data array
     public void printArray() {

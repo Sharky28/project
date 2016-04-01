@@ -14,10 +14,11 @@ import java.io.*;
  */
 public class ReadFiles {
 
-    File file = new File("C:\\stocks\\newdow.csv");
+    File file = new File("C:\\stocks\\AppleStocks.csv");
     int row = 0;
     String[][] items;
 
+    
     public boolean checkIsFile() {
         return file.isFile();
     }
