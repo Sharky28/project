@@ -99,7 +99,7 @@ public class TweetCollector {
                     if (maxID == -1 || s.getId() < maxID) {
                         maxID = s.getId();
                     }
-                    storeTweet(s);
+                    storeTweet(s);// where stored in db
 
                     System.out.printf("At%s , @%-20s said : %s\n",
                             s.getCreatedAt().toString(),

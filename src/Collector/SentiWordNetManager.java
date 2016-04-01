@@ -36,7 +36,8 @@ public class SentiWordNetManager {
     private Map<String, Double> intensifiers;
     HashMap<String, Double> dictionary;
     double neg = 1.0;
-    double intens = 1.0;
+    int intens=0;
+    double[] intensifierarray = new double[20];
 
     public SentiWordNetManager() {
         swn = new SWN3(path);
@@ -81,21 +82,31 @@ public class SentiWordNetManager {
             String nextWord = (String) tokenizer.nextElement();
             if(intensifiers.get(nextWord)!=null)
                     {
-                     intens= intensifiers.get(nextWord);
+                        //storing each intensifying word in an array to handle cases like "very very good"
+                     intensifierarray[intens++] = intensifiers.get(nextWord);
+
                     }
             if (dictionary.get(nextWord) != null) {
-                score = score+(intens*dictionary.get(nextWord));
+                for (int a = 0; a < intens; a++) {
+                    //the value of the next words sentiment is multiplied by each intensifier 
+                    score = score+(dictionary.get(nextWord)*intensifierarray[a]);
+                    intensifierarray[a]=0.0; // empty the array so as to not influence later features
+                }
+                // always multiply by the value of neg , should be 1.0 if no negations found
                 score = score + (neg * dictionary.get(nextWord));
-                neg = 1;
-                intens =1;
+                neg = 1;//ensures it stays one 
+ 
             } else if (negations.contains(nextWord)) {
+                //negation found so make the value of neg a negative 
                 neg = (-1.0) * neg;
             }
         }
+        //trims the double
         DecimalFormat df = new DecimalFormat("#.###");
         return Double.valueOf(df.format(score));
 
     }
+    
 
     // to check wheter loaded
     public void printNegations() {

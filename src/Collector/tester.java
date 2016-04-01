@@ -57,7 +57,7 @@ public class tester {
        
         
         System.out.println(sm.calculateWordScore("great"));
-        System.out.println(sm.calculateSentancescore("not great"));
+        System.out.println(sm.calculateSentancescore("very very great"));
         //sm.handleNegation(words);
         //sm.printNegations();
 
