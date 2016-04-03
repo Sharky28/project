@@ -8,7 +8,9 @@ package stock;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 /**
@@ -38,6 +40,14 @@ public class Stock {
 
     public void setDate(Date d) {
         this.date = d;
+    }
+    
+    public String getNumericalDate()
+    {
+//        GregorianCalendar temp =new GregorianCalendar(date.getYear(), date.getMonth(), date.getDate());
+//        String result = ""+this.date.get(Calendar.DAY_OF_MONTH)+","+date.get(Calendar.MONTH);
+        String result2 = (date.getMonth()+1)+"/"+date.getDate();
+        return result2;
     }
 
     public double getOpen() {
