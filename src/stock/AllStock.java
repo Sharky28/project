@@ -47,14 +47,14 @@ public class AllStock {
         }
         try {
             in = new BufferedReader(new FileReader(path));
-            String line = "";
+
             DateFormat df = new SimpleDateFormat("d/M/y");
 
-            String inputLine;
+            String line;
             in.readLine();
-            while ((inputLine = in.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(inputLine, ",");
-                TimeSeries series1 = new TimeSeries("Data");
+            while ((line = in.readLine()) != null) {
+                StringTokenizer st = new StringTokenizer(line, ",");
+
                 Date date = df.parse(st.nextToken());
                 double open = Double.parseDouble(st.nextToken());
                 double high = Double.parseDouble(st.nextToken());
@@ -73,7 +73,7 @@ public class AllStock {
             Logger.getLogger(AllStock.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(AllStock.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
     }
 

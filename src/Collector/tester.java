@@ -5,11 +5,13 @@
  */
 package Collector;
 
+import sentiment.Lexicons;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import sentiment.SentimentAnalyser;
 import sun.misc.Regexp;
 
 /**
@@ -19,15 +21,16 @@ import sun.misc.Regexp;
 public class tester {
 
     public static void main(String[] args) {
-        String tweet = "very good day";
-        //   Pattern p = Pattern.compile("http://*https://*www.*ftp://*ssh://*@");
-        // Matcher m = p.matcher(tweet);
-        // boolean b = m.matches();
-        // System.out.println(b);
-        SentiWordNetManager sm = new SentiWordNetManager();
-
-        String s = normalizeTweet(tweet);
-        StringTokenizer reader = new StringTokenizer(s);
+//        String tweet = "very good day";
+//        //   Pattern p = Pattern.compile("http://*https://*www.*ftp://*ssh://*@");
+//        // Matcher m = p.matcher(tweet);
+//        // boolean b = m.matches();
+//        // System.out.println(b);
+//        SentiWordNetManager sm = new SentiWordNetManager();
+//        Lexicons lex = new Lexicons();
+//
+//        String s = normalizeTweet(tweet);
+//        StringTokenizer reader = new StringTokenizer(s);
 
 //            String nextWord =reader.nextToken();
 //            System.out.println(nextWord +","+sm.calculateWordScore(nextWord));
@@ -46,18 +49,20 @@ public class tester {
         //  System.out.println(t);
         //removes "http://foo" "https://bar"
         // percentageChange((float) 6201.1, (float) 6189.6);
-        sm.contains("not");
-        sm.removeNegationsFromDict();
-        sm.contains("not");
-        System.out.println(">>>>>");
-        sm.loadIntensifiers();
-        sm.contains("very");
-        sm.removeIntensifiersFromDict();
-        sm.contains(s);
-       
+//        sm.contains("not");
+//        sm.removeNegationsFromDict();
+//        sm.contains("not");
+//        System.out.println(">>>>>");
+//        sm.loadIntensifiers();
+//        sm.contains("very");
+//        sm.removeIntensifiersFromDict();
+//        sm.contains(s);
         
-        System.out.println(sm.calculateWordScore("great"));
-        System.out.println(sm.calculateSentancescore("very very great"));
+        sentiment.SentimentAnalyser sA = new SentimentAnalyser();
+        System.out.println(sA.calculateTweetPolarity("very very great"));
+        
+//        System.out.println(sm.calculateWordScore("great"));
+//        System.out.println(sm.calculateSentancescore("not great"));
         //sm.handleNegation(words);
         //sm.printNegations();
 

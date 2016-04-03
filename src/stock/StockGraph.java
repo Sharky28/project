@@ -9,7 +9,6 @@ package stock;
  *
  * @author sharmarke
  */
-
 import java.util.List;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
@@ -18,6 +17,7 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+
 
 public class StockGraph extends ApplicationFrame {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package sentiment;
 
 import com.sun.org.apache.xpath.internal.patterns.NodeTest;
 import java.io.BufferedReader;

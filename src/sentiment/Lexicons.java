@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package sentiment;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class Lexicons {
 
-    private  String sentiWordNetFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\SentiWordNet_3.0.0_20130122.txt";
+    private String sentiWordNetFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\SentiWordNet_3.0.0_20130122.txt";
     private String negationsFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\negations.txt";
     private String intensifiersFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\intensifiers.txt";
 
@@ -37,7 +37,7 @@ public class Lexicons {
         negations = new ArrayList<String>();
         intensifiers = new HashMap<String, Double>();
         try {
-            
+
             loadDictionary();
             loadNegations();
             removeNegationsFromDict();
@@ -52,7 +52,7 @@ public class Lexicons {
     }
 
     public static void main(String[] args) {
-      
+
     }
 
     public Map<String, Double> getDictionary() {
@@ -67,21 +67,21 @@ public class Lexicons {
         return negations;
     }
 
-    public void loadNegations() throws FileNotFoundException, IOException {
+    public void loadNegations() {
 
         String line = "";
 
-        BufferedReader reader = new BufferedReader(new FileReader(negationsFile));
         try {
-
+            BufferedReader reader = new BufferedReader(new FileReader(negationsFile));
             while ((line = reader.readLine()) != null) {
                 negations.add(line);
             }
 
-        } catch (Exception x) {
-            System.out.println("Files have not been Loaded, check that they are in correct location");
+        } catch (FileNotFoundException x) {
+            System.out.println("Files not found");
+        } catch (IOException ix) {
+            System.out.println(ix.getMessage());
         }
-        reader.close();
 
     }
 
@@ -89,22 +89,22 @@ public class Lexicons {
         return intensifiers;
     }
 
-    public void loadIntensifiers() throws FileNotFoundException, IOException {
+    public void loadIntensifiers() {
 
         String line = "";
-        BufferedReader reader = new BufferedReader(new FileReader(intensifiersFile));
-        try {
 
-            int x = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(intensifiersFile));
+
             while ((line = reader.readLine()) != null) {
-                String s = "";
+
                 String[] parts = line.split("\t");
                 intensifiers.put(parts[0], (Double) Double.parseDouble(parts[1]));
             }
-        } catch (Exception ex) {
-            System.out.println("Files have not been Loaded, check that they are in correct location");
-        } finally {
-            reader.close();
+        } catch (FileNotFoundException x) {
+            System.out.println("Files not found");
+        } catch (IOException ix) {
+            System.out.println(ix.getMessage());
         }
     }
 
