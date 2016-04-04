@@ -40,20 +40,20 @@ public class StockGraph extends ApplicationFrame {
         JScrollPane pane = new JScrollPane();
         pane.add(chartPanel);
         setContentPane(chartPanel);
-        chartPanel.setMouseWheelEnabled(true);
+       
 
     }
 
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        GregorianCalendar start = new GregorianCalendar(2016, 2, 18);
+        GregorianCalendar start = new GregorianCalendar(2016, 0, 18);
         GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
 
         StockDownloader downloader = new StockDownloader();
         StockManager manager = new StockManager();
 
-        List<Stock> stocks = manager.getStocks(downloader.downloadStocks("AAPL", start, end));
+        List<Stock> stocks = manager.getStocks(downloader.downloadStocks("AAPL", start, end,"w"));
 
         String price = "";
 

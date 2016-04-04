@@ -21,9 +21,10 @@ import java.util.StringTokenizer;
 public class Stock {
 
     private Date date;
-    private double open, high, low, close, volume, adjustedClose;
+    private double open, high, low, close, adjustedClose;
+    private int volume;
 
-    public Stock(Date date, double open, double high, double low, double close, double volume, double adjustedClose) {
+    public Stock(Date date, double open, double high, double low, double close, int volume, double adjustedClose) {
         this.date = date;
         this.open = open;
         this.high = high;
@@ -89,7 +90,7 @@ public class Stock {
         return volume;
     }
 
-    public void setVolume(double v) {
+    public void setVolume(int v) {
         this.volume = v;
     }
 

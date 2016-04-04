@@ -20,7 +20,6 @@ import java.util.StringTokenizer;
 public class StockManager {
 
     private List<Stock> stocks;
-    private Object[][] data;
 
     private String[] columnNames = {"Date", "Open", "High", "Low", "Close", "Volume", "AdjClose"};
 
@@ -47,7 +46,7 @@ public class StockManager {
             double high = Double.parseDouble(st.nextToken());
             double low = Double.parseDouble(st.nextToken());
             double close = Double.parseDouble(st.nextToken());
-            double volume = Double.parseDouble(st.nextToken());
+            int volume = Integer.parseInt(st.nextToken());
             double adjClose = Double.parseDouble(st.nextToken());
 
             Stock temp = new Stock(date, open, high, low, close, volume, adjClose);
@@ -73,8 +72,6 @@ public class StockManager {
     public String[] getColumnNames() {
         return this.columnNames;
     }
-
-    
 
     public Object[][] getData() {
 

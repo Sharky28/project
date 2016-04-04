@@ -5,6 +5,9 @@
  */
 package Collector;
 
+import com.toedter.calendar.JDateChooser;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.*;
@@ -208,38 +211,83 @@ public class MainFrame extends javax.swing.JFrame {
         } else if (choice.equals("Nokia")) {
             symbol = "";
         }
-
- //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //       String date = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
-        Date startTemp = jDateChooser1.getDate();
-        int year = startTemp.getYear();
-        int month = startTemp.getMonth();
-        int day = startTemp.getDate();
-
-        GregorianCalendar start = new GregorianCalendar(year, month, day);
-
-        Calendar cal = jDateChooser1.getCalendar();
-        Date tempDate =cal.getTime();
-        Date endTemp = jDateChooser2.getDate();
         
-        GregorianCalendar temp = (GregorianCalendar) cal;
-        int endyear = (endTemp.getYear()) + 1900;
-        int endmonth = endTemp.getMonth() + 1;
-        int endday = endTemp.getDate();
+//        GregorianCalendar start2 = new GregorianCalendar(jDateChooser1.getCalendar().get(Calendar.YEAR),
+//                                                         jDateChooser1.getCalendar().get(Calendar.MONDAY), 
+//                                                         jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH));
+//
+//         GregorianCalendar end2 = new GregorianCalendar(jDateChooser2.getCalendar().get(Calendar.YEAR),
+//                                                         jDateChooser2.getCalendar().get(Calendar.MONDAY), 
+//                                                         jDateChooser2.getCalendar().get(Calendar.DAY_OF_MONTH));
 
-        GregorianCalendar end = new GregorianCalendar(endyear, endmonth, endday);
-
-        System.out.println(start.toString() + "\n" + end.toString());
-
-        //       System.out.println(year + "," + month + "," + day);
-        System.out.println(endyear + "," + endmonth + "," + endday);
-
+        //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //       String date = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
+//        Date startTemp = jDateChooser1.getDate();
+//        int year = startTemp.getYear();
+//        int month = startTemp.getMonth();
+//        int day = startTemp.getDate();
+//
+//        GregorianCalendar start = new GregorianCalendar(year, month, day);
+//
+//        Calendar cal = jDateChooser1.getCalendar();
+//        Date tempDate =cal.getTime();
+//        Date endTemp = jDateChooser2.getDate();
+//        
+//        GregorianCalendar temp = (GregorianCalendar) cal;
+//        int endyear = (endTemp.getYear()) + 1900;
+//        int endmonth = endTemp.getMonth() + 1;
+//        int endday = endTemp.getDate();
+//
+//        GregorianCalendar end = new GregorianCalendar(endyear, endmonth, endday);
+//
+//        System.out.println(start.toString() + "\n" + end.toString());
+//
+//        //       System.out.println(year + "," + month + "," + day);
+//        System.out.println(endyear + "," + endmonth + "," + endday);
+//        Calendar cal1 =  new GregorianCalendar();
+//        cal1.setTime(jDateChooser1.getDate());
+//      
+//        int year = cal1.get(Calendar.YEAR);
+//        int month = cal1.get(Calendar.MONTH);
+//        int day = cal1.get(Calendar.DAY_OF_MONTH);
+//        //      System.out.println(startDate+"\n"+ startDate.getYear()+","+startDate.getMonth()+","+startDate.getDate()
+//        //     +"\n"+ startDate.toString());
+//
+//        GregorianCalendar gregDate = new GregorianCalendar(year,month,day);
+//     
+//        //      System.out.println(gregDate.toString());
+//        Calendar cal2 = new GregorianCalendar();
+//        cal2.setTime(jDateChooser2.getDate());
+//        
+//        int eyear = cal2.get(Calendar.YEAR);
+//        int emonth = cal2.get(Calendar.MONTH);
+//        int eday = cal2.get(Calendar.DAY_OF_MONTH);
+//
+//        GregorianCalendar greg2Date = new GregorianCalendar(eyear,emonth,eday);
+        
+      
         stock.StockDownloader downloader = new StockDownloader();
         stock.StockManager manager = new StockManager();
+        
+        GregorianCalendar startDate = (GregorianCalendar) jDateChooser1.getCalendar();
+        GregorianCalendar endDate = (GregorianCalendar) jDateChooser2.getCalendar();
+        
+        int y=startDate.get(Calendar.YEAR);
+        int m = startDate.get(Calendar.MONDAY)+1;
+         int d= startDate.get(Calendar.DAY_OF_MONTH);
+         
+         System.out.println(y+","+m+","+d);
+         
+         int ey = endDate.get(Calendar.YEAR);
+         int em = endDate.get(Calendar.MONTH)+1;
+         int ed = endDate.get(Calendar.DAY_OF_MONTH);
+        
+         System.out.println(ey+","+em+","+ed);
+        
 
-//        GregorianCalendar start = new GregorianCalendar(2015, 11, 29);
-//        GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
-        List<String> stockLines = downloader.downloadStocks(symbol, start, end);
+        GregorianCalendar start = new GregorianCalendar(y, m, d);
+        GregorianCalendar end = new GregorianCalendar(ey, em, ed);
+        List<String> stockLines = downloader.downloadStocks(symbol,start, end, "d");
         List<stock.Stock> stocks = manager.getStocks(stockLines);
         Object[][] dataSet = manager.getData();
         String[] columnNames = manager.getColumnNames();
