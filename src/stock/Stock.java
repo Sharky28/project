@@ -6,6 +6,7 @@
 package stock;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,7 +21,7 @@ import java.util.StringTokenizer;
 public class Stock {
 
     private Date date;
-    private double open ,high, low, close, volume, adjustedClose;
+    private double open, high, low, close, volume, adjustedClose;
 
     public Stock(Date date, double open, double high, double low, double close, double volume, double adjustedClose) {
         this.date = date;
@@ -32,26 +33,28 @@ public class Stock {
         this.adjustedClose = adjustedClose;
     }
 
-   
-
     public Date getDate() {
         return date;
+    }
+
+    public String getFormatedDate() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(date);
     }
 
     public void setDate(Date d) {
         this.date = d;
     }
-    
-    public String getNumericalDate()
-    {
+
+    public String getNumericalDate() {
 //        GregorianCalendar temp =new GregorianCalendar(date.getYear(), date.getMonth(), date.getDate());
 //        String result = ""+this.date.get(Calendar.DAY_OF_MONTH)+","+date.get(Calendar.MONTH);
-        String result2 = (date.getMonth()+1)+"/"+date.getDate();
+        String result2 = date.getDate() + "/" + (date.getMonth() + 1);
         return result2;
     }
 
     public double getOpen() {
-        return open;
+        return format(open);
     }
 
     public void setOpen(double o) {
@@ -59,7 +62,7 @@ public class Stock {
     }
 
     public double getHigh() {
-        return high;
+        return format(high);
     }
 
     public void setHigh(double h) {
@@ -67,7 +70,7 @@ public class Stock {
     }
 
     public double getLow() {
-        return low;
+        return format(low);
     }
 
     public void setLow(double l) {
@@ -75,7 +78,7 @@ public class Stock {
     }
 
     public double getClose() {
-        return close;
+        return format(close);
     }
 
     public void setClose(double c) {
@@ -91,11 +94,20 @@ public class Stock {
     }
 
     public double getAdjustedClose() {
-        return adjustedClose;
+        return format(adjustedClose);
     }
 
     public void setAdjustedClose(double aC) {
         this.adjustedClose = aC;
+    }
+
+    public Object[] toObjectArray() {
+        return new Object[]{getFormatedDate(), getOpen(), getClose(), getHigh(), getLow(), getVolume(), getAdjustedClose()};
+    }
+
+    public double format(Double value) {
+        DecimalFormat df = new DecimalFormat("#.###");
+        return Double.valueOf(df.format(value));
     }
 
 }

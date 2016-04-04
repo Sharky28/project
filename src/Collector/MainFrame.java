@@ -5,25 +5,15 @@
  */
 package Collector;
 
-import com.opencsv.CSVReader;
-import java.awt.Dimension;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
+
 import javax.swing.table.DefaultTableModel;
+
+import stock.StockDownloader;
+import stock.StockManager;
 
 /**
  *
@@ -31,13 +21,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private Object[][] data;
-
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
-        data = null;
+
         initComponents();
         jTable1.setVisible(false);
 
@@ -210,57 +198,61 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         String choice = jComboBox1.getSelectedItem().toString();
-        String path = "";
+        String symbol = "";
         if (choice.equals("Apple")) {
-            path = "C:\\stocks\\AppleStocks.csv";
+            symbol = "AAPL";
         } else if (choice.equals("Samsung")) {
-            path = "C:\\stocks\\SamsungStocks.csv";
+            symbol = "";
         } else if (choice.equals("Nokia")) {
-            path = "C:\\stocks\\NokiaStocks.csv";
+            symbol = "";
         }
-        String[] columnNames = null;
-        data = new Object[400][];
-        int nRows = 0;
-       
-        // Load CSV file
-        CSVReader reader;
-        try {
-            reader = new CSVReader(new FileReader(path));
-            columnNames = reader.readNext();	// first line = column names
-            String[] line;
-            int i;
-            while ((line = reader.readNext()) != null) {
-                Object[] row = new Object[line.length];
-                // convert strings to int or double when possible
-                for (i = 0; i < line.length; i++) {
-                    try {
-                        row[i] = Integer.valueOf((String) line[i]);
-                    } catch (NumberFormatException e1) {
-                        try {
-                            row[i] = Double.valueOf((String) line[i]);
-                        } catch (NumberFormatException e2) {
-                            row[i] = line[i];
-                        }
-                    }
-                }
-                data[nRows++] = row;
-            }
-            reader.close();
-        } catch (java.io.IOException e) {
-            System.out.print("Error while reading\n");
-        }
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+ //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //       String date = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
+        Date startTemp = jDateChooser1.getDate();
+        int year = startTemp.getYear();
+        int month = startTemp.getMonth();
+        int day = startTemp.getDate();
+
+        GregorianCalendar start = new GregorianCalendar(year, month, day);
+
+        Calendar cal = jDateChooser1.getCalendar();
+        Date tempDate =cal.getTime();
+        Date endTemp = jDateChooser2.getDate();
+        
+        GregorianCalendar temp = (GregorianCalendar) cal;
+        int endyear = (endTemp.getYear()) + 1900;
+        int endmonth = endTemp.getMonth() + 1;
+        int endday = endTemp.getDate();
+
+        GregorianCalendar end = new GregorianCalendar(endyear, endmonth, endday);
+
+        System.out.println(start.toString() + "\n" + end.toString());
+
+        //       System.out.println(year + "," + month + "," + day);
+        System.out.println(endyear + "," + endmonth + "," + endday);
+
+        stock.StockDownloader downloader = new StockDownloader();
+        stock.StockManager manager = new StockManager();
+
+//        GregorianCalendar start = new GregorianCalendar(2015, 11, 29);
+//        GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
+        List<String> stockLines = downloader.downloadStocks(symbol, start, end);
+        List<stock.Stock> stocks = manager.getStocks(stockLines);
+        Object[][] dataSet = manager.getData();
+        String[] columnNames = manager.getColumnNames();
+
+        DefaultTableModel model = new DefaultTableModel(dataSet, columnNames);
         jTable1.setModel(model);
-        jTable1.setVisible(true);
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-       
-       
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -294,7 +286,7 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainFrame().setVisible(true);
-                
+
             }
         });
     }

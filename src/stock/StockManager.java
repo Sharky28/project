@@ -20,12 +20,14 @@ import java.util.StringTokenizer;
 public class StockManager {
 
     private List<Stock> stocks;
-    
-    private String[] columnNames ={"Date","Open","High","Low","Close","Volume","Adj","Close"};
+    private Object[][] data;
+
+    private String[] columnNames = {"Date", "Open", "High", "Low", "Close", "Volume", "AdjClose"};
 
     public StockManager() {
-       
+
         stocks = new ArrayList<Stock>();
+
     }
 
     public List<Stock> getStocks(List<String> stockLines) {
@@ -67,10 +69,20 @@ public class StockManager {
                     + "\n*******************");
         }
     }
-    
-    public String[] getColumnNames()
-    {
+
+    public String[] getColumnNames() {
         return this.columnNames;
     }
-   
+
+    
+
+    public Object[][] getData() {
+
+        Object[][] table = new Object[stocks.size()][];
+        for (int i = 0; i < stocks.size(); i++) {
+            table[i] = stocks.get(i).toObjectArray();
+        }
+        return table;
+    }
+
 }

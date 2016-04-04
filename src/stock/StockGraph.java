@@ -15,20 +15,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.swing.JScrollPane;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYSeries;
 
 public class StockGraph extends ApplicationFrame {
 
@@ -42,8 +36,11 @@ public class StockGraph extends ApplicationFrame {
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(lineChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        chartPanel.setPreferredSize(new java.awt.Dimension(1000, 367));
+        JScrollPane pane = new JScrollPane();
+        pane.add(chartPanel);
         setContentPane(chartPanel);
+        chartPanel.setMouseWheelEnabled(true);
 
     }
 
@@ -57,8 +54,6 @@ public class StockGraph extends ApplicationFrame {
         StockManager manager = new StockManager();
 
         List<Stock> stocks = manager.getStocks(downloader.downloadStocks("AAPL", start, end));
-        
-       
 
         String price = "";
 
@@ -78,5 +73,8 @@ public class StockGraph extends ApplicationFrame {
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
+        JScrollPane pane =new JScrollPane();
+//        pane.add(chart);
+//        pane.setVisible(true);
     }
 }
