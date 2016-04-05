@@ -5,6 +5,7 @@
  */
 package Collector;
 
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,11 +25,15 @@ import stock.StockManager;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    GregorianCalendar startDate;
+    GregorianCalendar endDate;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
-
+        startDate = null;
+        endDate = null;
         initComponents();
         jTable1.setVisible(false);
 
@@ -49,10 +54,10 @@ public class MainFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
+        jCalendarCombo1 = new org.freixas.jcalendar.JCalendarCombo();
+        jCalendarCombo2 = new org.freixas.jcalendar.JCalendarCombo();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -88,19 +93,34 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("End Date");
 
+        jCalendarCombo1.addDateListener(new org.freixas.jcalendar.DateListener() {
+            public void dateChanged(org.freixas.jcalendar.DateEvent evt) {
+                jCalendarCombo1DateChanged(evt);
+            }
+        });
+
+        jCalendarCombo2.addDateListener(new org.freixas.jcalendar.DateListener() {
+            public void dateChanged(org.freixas.jcalendar.DateEvent evt) {
+                jCalendarCombo2DateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jCalendarCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCalendarCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(99, 99, 99)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -110,14 +130,14 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jLabel1)
-                        .addGap(76, 76, 76)
-                        .addComponent(jLabel2)))
+                                .addComponent(jButton2)))))
                 .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(62, 62, 62))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,15 +147,18 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCalendarCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCalendarCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -211,7 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else if (choice.equals("Nokia")) {
             symbol = "";
         }
-        
+
 //        GregorianCalendar start2 = new GregorianCalendar(jDateChooser1.getCalendar().get(Calendar.YEAR),
 //                                                         jDateChooser1.getCalendar().get(Calendar.MONDAY), 
 //                                                         jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -219,7 +242,6 @@ public class MainFrame extends javax.swing.JFrame {
 //         GregorianCalendar end2 = new GregorianCalendar(jDateChooser2.getCalendar().get(Calendar.YEAR),
 //                                                         jDateChooser2.getCalendar().get(Calendar.MONDAY), 
 //                                                         jDateChooser2.getCalendar().get(Calendar.DAY_OF_MONTH));
-
         //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //       String date = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
 //        Date startTemp = jDateChooser1.getDate();
@@ -264,30 +286,12 @@ public class MainFrame extends javax.swing.JFrame {
 //        int eday = cal2.get(Calendar.DAY_OF_MONTH);
 //
 //        GregorianCalendar greg2Date = new GregorianCalendar(eyear,emonth,eday);
-        
-      
         stock.StockDownloader downloader = new StockDownloader();
         stock.StockManager manager = new StockManager();
-        
-        GregorianCalendar startDate = (GregorianCalendar) jDateChooser1.getCalendar();
-        GregorianCalendar endDate = (GregorianCalendar) jDateChooser2.getCalendar();
-        
-        int y=startDate.get(Calendar.YEAR);
-        int m = startDate.get(Calendar.MONDAY)+1;
-         int d= startDate.get(Calendar.DAY_OF_MONTH);
-         
-         System.out.println(y+","+m+","+d);
-         
-         int ey = endDate.get(Calendar.YEAR);
-         int em = endDate.get(Calendar.MONTH)+1;
-         int ed = endDate.get(Calendar.DAY_OF_MONTH);
-        
-         System.out.println(ey+","+em+","+ed);
+
         
 
-        GregorianCalendar start = new GregorianCalendar(y, m, d);
-        GregorianCalendar end = new GregorianCalendar(ey, em, ed);
-        List<String> stockLines = downloader.downloadStocks(symbol,start, end, "d");
+        List<String> stockLines = downloader.downloadStocks(symbol, startDate, endDate, "d");
         List<stock.Stock> stocks = manager.getStocks(stockLines);
         Object[][] dataSet = manager.getData();
         String[] columnNames = manager.getColumnNames();
@@ -302,6 +306,16 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jCalendarCombo1DateChanged(org.freixas.jcalendar.DateEvent evt) {//GEN-FIRST:event_jCalendarCombo1DateChanged
+
+        startDate = (GregorianCalendar)jCalendarCombo1.getCalendar();
+
+    }//GEN-LAST:event_jCalendarCombo1DateChanged
+
+    private void jCalendarCombo2DateChanged(org.freixas.jcalendar.DateEvent evt) {//GEN-FIRST:event_jCalendarCombo2DateChanged
+        endDate = (GregorianCalendar)jCalendarCombo2.getCalendar();
+    }//GEN-LAST:event_jCalendarCombo2DateChanged
 
     /**
      * @param args the command line arguments
@@ -344,10 +358,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo1;
+    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

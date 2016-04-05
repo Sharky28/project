@@ -47,8 +47,10 @@ public class StockGraph extends ApplicationFrame {
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        GregorianCalendar start = new GregorianCalendar(2016, 0, 18);
+       GregorianCalendar start = new GregorianCalendar(2016, 0, 18);
+//        Date start = new Date(2015, 0, 18);
         GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
+//        Date end = new Date(2016, 3, 1);
 
         StockDownloader downloader = new StockDownloader();
         StockManager manager = new StockManager();
