@@ -31,9 +31,8 @@ public class SentimentAnalyser {
     public void addLexicon(Lexicons lex) {
         this.lexicon = lex;
     }
-    
-    
-     public  double calculateTweetPolarity(String tweet) {
+
+    public double calculateTweetPolarity(String tweet) {
 
         double score = 0.0d;
         double neg = 1.0;
@@ -70,6 +69,4 @@ public class SentimentAnalyser {
         return Double.valueOf(df.format(score));
 
     }
-    
-
 }

@@ -59,7 +59,7 @@ public class tester {
 //        sm.contains(s);
         
         sentiment.SentimentAnalyser sA = new SentimentAnalyser();
-        System.out.println(sA.calculateTweetPolarity("very very great"));
+        System.out.println(sA.calculateTweetPolarity("very  very great"));
         
 //        System.out.println(sm.calculateWordScore("great"));
 //        System.out.println(sm.calculateSentancescore("not great"));

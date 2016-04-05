@@ -37,26 +37,18 @@ public class TweetAnalyzer {
         //cant have one method collecting /storing/returning
         statuses = TweetCollector.printTimeLine("CNN");
         sessionScores = new ArrayList<Double>();
-        lex = new Lexicons();
+//        lex = new Lexicons();
 
     }
 
     public static void main(String[] args) {
-        TweetAnalyzer tn = new TweetAnalyzer();
 
-        for (Status a : statuses) {
-            if ("en".equals(a.getLang())) {
-                String tweet = PreProcessor.normalizeTweet(a.getText());
-                //calculateTweetScore(tweet);
-  //              System.out.println(tweet + tn.calculateTweetPolarity(tweet));
-
-            }
-        }
-        calculateAveragePolarity(sessionScores);
+        String tweet = " not great";
+        System.out.println(calculateTweetScore(tweet));
 
     }
 
-//    public static void calculateTweetScore(String tw) {
+//    public static double calculateTweetScore(String tw) {
 //
 //        StringTokenizer tweet = new StringTokenizer(tw);
 //        double sum = 0;
@@ -76,9 +68,43 @@ public class TweetAnalyzer {
 //            sum = sum + score;
 //        }
 //        double avg = sum / scores.size();
-//        System.out.println(tw + avg);
+//
+//        DecimalFormat df = new DecimalFormat("#.###");
+//        return Double.valueOf(df.format(avg));
 //
 //    }
+    public static double calculateTweetScore(String tw) {
+        lex = new Lexicons();
+        StringTokenizer tweet = new StringTokenizer(tw);
+        double score = 0.0d;
+        double neg = 1.0;
+        double[] intensifierarray = new double[10];
+        int intensifiersCount = 0;
+
+        while (tweet.hasMoreElements()) {
+            String nextWord = tweet.nextToken();
+            if (lex.getIntensifiers().get(nextWord) != null) {
+                intensifierarray[intensifiersCount++] = lex.getIntensifiers().get(nextWord);
+            }
+            if (lex.getDictionary().get(nextWord) != null) {
+                for (int i = 0; i < intensifiersCount; i++) {
+
+                    score = score + (lex.getDictionary().get(nextWord)) * intensifierarray[i];
+                    intensifierarray[i] = 0.0;
+                }
+                score = score + (neg * lex.getDictionary().get(nextWord));
+                neg = 1;
+            } else if (lex.getNegations().contains(nextWord)) {
+
+                neg = (-1.0) * neg;
+            }
+        }
+        DecimalFormat df = new DecimalFormat("#.###");
+        return Double.valueOf(df.format(score));
+
+    }
+}
+
 //    public static double calculateTweetPolarity(String tweet) {
 //
 //        double score = 0.0d;
@@ -116,7 +142,6 @@ public class TweetAnalyzer {
 //        return Double.valueOf(df.format(score));
 //
 //    }
-
 //    public static void calculateTweetpolarity(String tw) {
 //        StringTokenizer tweet = new StringTokenizer(tw);
 //        List<String> words = new ArrayList<>();
@@ -133,15 +158,14 @@ public class TweetAnalyzer {
 //        System.out.println(tw + "," + score);
 //    }
 //
-    public static void calculateAveragePolarity(List<Double> sc) {
-        List<Double> scores = sc;
-        double sum = 0.0;
-        for (Double score : scores) {
-            sum = sum + score;
-        }
-        double avg = 0.0;
-        avg = sum / scores.size();
-        System.out.println("Average :" + sum);
-    }
+//    public static void calculateAveragePolarity(List<Double> sc) {
+//        List<Double> scores = sc;
+//        double sum = 0.0;
+//        for (Double score : scores) {
+//            sum = sum + score;
+//        }
+//        double avg = 0.0;
+//        avg = sum / scores.size();
+//        System.out.println("Average :" + sum);
+//    }
 
-}

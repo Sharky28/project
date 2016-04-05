@@ -20,13 +20,13 @@ import java.util.Set;
 public class SWN3 {
 
     private HashMap<String, Double> _dict;
-    public static final String STR_POS = "strong_positive";
-    public static final String POS = "positive";
-    public static final String WEK_POS = "weak_positive";
-    public static final String STR_NEG = "strong_negative";
-    public static final String NEG = "negative";
-    public static final String WEK_NEG = "weak_negative";
-    public static final String NU = "";
+//    public static final String STR_POS = "strong_positive";
+//    public static final String POS = "positive";
+//    public static final String WEK_POS = "weak_positive";
+//    public static final String STR_NEG = "strong_negative";
+//    public static final String NEG = "negative";
+//    public static final String WEK_NEG = "weak_negative";
+//    public static final String NU = "";
 
     public SWN3(String pathToSWN) {
 
