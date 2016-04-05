@@ -64,29 +64,23 @@ public class TweetCollector {
 
             Query query = new Query(q);
             //printTimeLine(query);
-
             Map<String, RateLimitStatus> rateLimitStatus = twitter.getRateLimitStatus("search");
-            RateLimitStatus searchTweetLimit = rateLimitStatus.get("/search/tweets");
-            System.out.printf("You have %d calls remaining out of %d ,Limit resets in %d,",
-                    searchTweetLimit.getRemaining(),
-                    searchTweetLimit.getLimit(),
-                    searchTweetLimit.getSecondsUntilReset());
+            RateLimitStatus searchLimit = rateLimitStatus.get("/search/tweets");
+            for (int batchNumber = 0; MAX_QUERIES < 10; batchNumber++) {
 
-            for (int queryNumer = 0; MAX_QUERIES < 10; queryNumer++) {
+                System.out.printf("\n\n!!! batch %d\n\n", batchNumber);
 
-                System.out.printf("\n\n!!! Starting loop %d\n\n", queryNumer);
-
-                if (searchTweetLimit.getRemaining() == 0) {
-                    System.out.printf("Sleeping for%d seconds due rate limit\n", searchTweetLimit.getSecondsUntilReset());
-                    Thread.sleep(searchTweetLimit.getSecondsUntilReset() + 2 * 1001);
+                if (searchLimit.getRemaining() == 0) {
+                    // so as to not get blocked by twitter
+                    Thread.sleep(searchLimit.getSecondsUntilReset() + 3 * 1001);
                 }
 
-                query.setCount(TWEETS_PER_QUERY);
+                query.setCount(TWEETS_PER_QUERY);// constant value of 100
                 query.setResultType(Query.ResultType.recent);
-                query.setLang("en");
+                query.setLang("en");// only english tweets
 
                 if (maxID != -1) {
-                    query.setMaxId(maxID - 1);
+                    query.setMaxId(maxID - 1);// so the first querys not set to previous max
                 }
                 QueryResult result = twitter.search(query);
                 if (result.getTweets().size() == 0) {
@@ -100,20 +94,31 @@ public class TweetCollector {
                     }
                     storeTweet(s);// where stored in db
 
-                    System.out.printf("At%s , @%-20s said : %s\n",
+                    System.out.printf("At%s , @%-20s said : %s\n", // debugging purposes
                             s.getCreatedAt().toString(),
                             s.getUser().getScreenName(),
                             s.getText());
-                    searchTweetLimit = result.getRateLimitStatus();
+                    searchLimit = result.getRateLimitStatus();
                     System.out.printf("\n\nA total of %d tweet retrieved\n", amountOfTweets);
 
                 }
 
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        }catch (TwitterException te) {
 
+            System.out.println("Error Code :" + te.getErrorCode());
+            System.out.println("Exception Code " + te.getExceptionCode());
+            System.out.println("Status Code " + te.getStatusCode());
+
+            if (te.getStatusCode() == 401) {
+                System.out.println("Twitter Error :\nAuthentication "
+                        + "credentials (https://dev.twitter.com/auth) "
+                        + " are either missing of incorrect, "
+                        + "\nplease check consumer key /secret");
+            }
+        } catch (InterruptedException ex) {
+            
         }
 
         return statuses;
@@ -162,5 +167,3 @@ public class TweetCollector {
     }
 
 }
-
-
