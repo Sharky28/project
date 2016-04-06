@@ -63,10 +63,15 @@ public class SentimentAnalyser {
             }
         }
         // collects all scores in order to calculate average
-        sessionScores.add(score);
+//        sessionScores.add(score);
         //trims the double
         DecimalFormat df = new DecimalFormat("#.###");
         return Double.valueOf(df.format(score));
 
+    }
+    
+    public List<Double> getSessionScores()
+    {
+        return  sessionScores;
     }
 }

@@ -29,11 +29,6 @@ public class StockDownloader {
     }
 
     public static void main(String[] args) {
-//        GregorianCalendar start = new GregorianCalendar(2015, 11, 29);
-//        GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
-//
-//        StockDownloader test = new StockDownloader();
-//        test.downloadStocks("AAPL", start, end);
 
     }
 
@@ -48,15 +43,6 @@ public class StockDownloader {
                 + "&b="+ start.get(Calendar.DAY_OF_MONTH)
                 + "&c="+start.get(Calendar.YEAR)
                 + "&ignore=.csv";
-//
-//        String url = "http://real-chart.finance.yahoo.com/table.csv?s=" + symbol
-//                + "&a=" + start.get(Calendar.MONTH)
-//                + "&b=" + start.get(Calendar.DAY_OF_MONTH)
-//                + "&c=" + start.get(Calendar.YEAR)
-//                + "&d=" + end.get(Calendar.MONTH)
-//                + "&e=" + end.get(Calendar.DAY_OF_MONTH)
-//                + "&f=" + end.get(Calendar.YEAR)
-//                + "&g=d&ignore=.csv";
 
         try {
             URL yahooFinance = new URL(url2);
@@ -80,3 +66,13 @@ public class StockDownloader {
     
 
 }
+
+//
+//        String url = "http://real-chart.finance.yahoo.com/table.csv?s=" + symbol
+//                + "&a=" + start.get(Calendar.MONTH)
+//                + "&b=" + start.get(Calendar.DAY_OF_MONTH)
+//                + "&c=" + start.get(Calendar.YEAR)
+//                + "&d=" + end.get(Calendar.MONTH)
+//                + "&e=" + end.get(Calendar.DAY_OF_MONTH)
+//                + "&f=" + end.get(Calendar.YEAR)
+//                + "&g=d&ignore=.csv";

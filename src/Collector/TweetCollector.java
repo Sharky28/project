@@ -18,7 +18,7 @@ import twitter4j.RateLimitStatus;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.UserMentionEntity;
-import twitter4j.json.DataObjectFactory;
+
 
 /**
  *
