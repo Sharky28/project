@@ -18,6 +18,7 @@ import twitter4j.RateLimitStatus;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.UserMentionEntity;
+import twitter4j.json.DataObjectFactory;
 
 /**
  *
@@ -147,6 +148,7 @@ public class TweetCollector {
 
     public static void storeTweet(Status tweet) {
 
+        
         BasicDBObject basicOBJ = new BasicDBObject();
         basicOBJ.put("user_name", tweet.getUser().getScreenName());
         basicOBJ.put("retweet_count", tweet.getRetweetCount());

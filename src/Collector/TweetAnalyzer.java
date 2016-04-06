@@ -5,6 +5,7 @@
  */
 package Collector;
 
+import sentiment.PreProcessor;
 import sentiment.Lexicons;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;

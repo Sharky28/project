@@ -5,6 +5,7 @@
  */
 package Collector;
 
+import sentiment.PreProcessor;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import java.util.List;
@@ -55,21 +56,5 @@ public class MainApp {
         
     }
 
-    public static void process() {
-        String tweet = " @yerdekigokyuzu1 - RT @denizatam: Cnn İnt'in Türkiye'yi dünya haritasından silmesi https://t.co/h5DJwEuXRo";
-        String newtweet = PreProcessor.normalizeTweet(tweet);
-        System.out.println(tweet + "\n" + newtweet);
-    }
-
-    public static void process2() {
-        String tweet = " a bb ccc dddd eeee";
-        String newTweet = PreProcessor.removeDuplicates(tweet);
-        System.out.println(tweet + "\n" + newTweet);
-    }
-
-    public static void process3() {
-        String tweet = " sfdfsf sdffsdf #wow";
-        String newTweet = PreProcessor.normalizeTweet(tweet);
-        System.out.println(tweet + "\n" + newTweet);
-    }
+   
 }

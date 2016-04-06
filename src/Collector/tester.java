@@ -91,7 +91,7 @@ public class tester {
 
     public static String normalizeTweet(String tweet) {
         String s = tweet;
-        s = s.replaceAll("https?://\\S+\\s?", "")
+        s = s.replaceAll("https?://\\S+\\s?", "") // http
                 .replaceAll("ftps?://\\S+\\s?", "")
                 .replaceAll("@\\w+|#\\w+|\\bRT\\b", "")
                 .replaceAll("\n", " ")
