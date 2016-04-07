@@ -20,7 +20,7 @@ public class PreProcessor {
                 .replaceAll("\n", " ")// removes empty lines
                 .replaceAll("[^\\p{L}\\p{N} ]+", " ") // removes numbers
                 .replaceAll(" +", " ")// removes double spacing
-                .replaceAll("(.)\\1+", "$1") // removes duplicates such as aaa bbbb
+ //               .replaceAll("(.)\\1+", "$1") // removes duplicates such as aaa bbbb
                 .trim();
 
         return s;

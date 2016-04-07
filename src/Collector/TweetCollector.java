@@ -11,6 +11,8 @@ import com.mongodb.DBCollection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -18,7 +20,6 @@ import twitter4j.RateLimitStatus;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.UserMentionEntity;
-
 
 /**
  *
@@ -56,6 +57,16 @@ public class TweetCollector {
     }
 
     public static List<Status> getTweets(String q) {
+//        Timer timer = new Timer();
+//        TimerTask hourlyTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                statuses = getTweets("Apple");
+//            }
+//        };
+//
+//// schedule the task to run starting now and then every hour...
+//        timer.schedule(hourlyTask, 0l, 1000 * 60 * 60);
 
         long amountOfTweets = 0;
 
@@ -106,7 +117,7 @@ public class TweetCollector {
 
             }
 
-        }catch (TwitterException te) {
+        } catch (TwitterException te) {
 
             System.out.println("Error Code :" + te.getErrorCode());
             System.out.println("Exception Code " + te.getExceptionCode());
@@ -119,7 +130,7 @@ public class TweetCollector {
                         + "\nplease check consumer key /secret");
             }
         } catch (InterruptedException ex) {
-            
+
         }
 
         return statuses;
@@ -148,7 +159,6 @@ public class TweetCollector {
 
     public static void storeTweet(Status tweet) {
 
-        
         BasicDBObject basicOBJ = new BasicDBObject();
         basicOBJ.put("user_name", tweet.getUser().getScreenName());
         basicOBJ.put("retweet_count", tweet.getRetweetCount());
@@ -157,6 +167,7 @@ public class TweetCollector {
         basicOBJ.put("tweet_mentioned_count", mentioned.length);
         basicOBJ.put("tweet_ID", tweet.getId());
         basicOBJ.put("tweet_text", tweet.getText());
+        basicOBJ.put("created_at", tweet.getCreatedAt());
 
         try {
             items.insert(basicOBJ);
