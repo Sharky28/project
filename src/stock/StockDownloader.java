@@ -22,8 +22,8 @@ import java.util.Scanner;
 public class StockDownloader {
 
     private List<String> stockLines;
-    
 
+   
     public StockDownloader() {
         stockLines = new ArrayList<>();
     }
@@ -32,7 +32,7 @@ public class StockDownloader {
 
     }
 
-    public List<String> downloadStocks(String symbol, GregorianCalendar start, GregorianCalendar end,String interval) {
+    public List<String> downloadStocks(String symbol, GregorianCalendar start, GregorianCalendar end,String interval) {   
         String url2 ="http://real-chart.finance.yahoo.com/table.csv?s="
                 + symbol
                 + "&d="+ end.get(Calendar.MONTH)
@@ -62,8 +62,6 @@ public class StockDownloader {
 
         return stockLines;
     }
-
-    
 
 }
 

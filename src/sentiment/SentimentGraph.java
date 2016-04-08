@@ -3,32 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stock;
+package sentiment;
+
+import Collector.SentimentEngine;
+import java.text.ParseException;
+import java.util.GregorianCalendar;
+import java.util.List;
+import javax.swing.JScrollPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+import stock.Stock;
+import stock.StockDownloader;
+import stock.StockManager;
 
 /**
  *
  * @author sharmarke
  */
-import java.util.GregorianCalendar;
-import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+public class SentimentGraph extends ApplicationFrame{
+    
 
-public class StockGraph extends ApplicationFrame {
 
-    public StockGraph(String applicationTitle, String chartTitle) {
+    public SentimentGraph(String applicationTitle, String chartTitle) throws ParseException {
         super(applicationTitle);
         JFreeChart lineChart = ChartFactory.createLineChart(
                 chartTitle,
-                "Date", "Price",
+                "Date", "Polarity",
                 createDataset(),
                 PlotOrientation.VERTICAL,
                 true, true, false);
@@ -41,33 +46,28 @@ public class StockGraph extends ApplicationFrame {
 
     }
     
-    private DefaultCategoryDataset createDataset() {
+    private DefaultCategoryDataset createDataset() throws ParseException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        GregorianCalendar start = new GregorianCalendar(2016, 0, 18);
-//        Date start = new Date(2015, 0, 18);
-        GregorianCalendar end = new GregorianCalendar(2016, 3, 1);
-//        Date end = new Date(2016, 3, 1);
+       SentimentEngine se = new SentimentEngine();
+       se.saveScores();
+       SentimentManager sm = se.getSentimentManager();
+        List<SentimentScore> scores = sm.getScores();
+        
+        String value ="";
 
-        StockDownloader downloader = new StockDownloader();
-        StockManager manager = new StockManager();
+        for (SentimentScore s : scores) {
 
-        List<Stock> stocks = manager.getStocks(downloader.downloadStocks("AAPL", start, end, "w"));
-
-        String price = "";
-
-        for (Stock s : stocks) {
-
-            dataset.addValue(s.getClose(), price, s.getNumericalDate());
+            dataset.addValue(s.getScore(), value, s.getTime());
 
         }
         return dataset;
     }
 
-    public static void main(String[] args) {
-        StockGraph chart = new StockGraph(
-                "Price Chart",
-                "Historical prices for :Apple");
+    public static void main(String[] args) throws ParseException {
+        SentimentGraph chart = new SentimentGraph(
+                "Sentiment Chart",
+                "......");
 
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
@@ -77,3 +77,5 @@ public class StockGraph extends ApplicationFrame {
 //        pane.setVisible(true);
     }
 }
+
+

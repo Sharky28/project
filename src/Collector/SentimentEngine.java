@@ -21,6 +21,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
+import sentiment.SentimentManager;
+import sentiment.SentimentScore;
 
 /**
  *
@@ -34,6 +37,7 @@ public class SentimentEngine {
     private List<String> tweets;
     private SentimentAnalyser analyzer;
     private List<Double> sessionScores;
+    private SentimentManager sM;
 
     public SentimentEngine() throws ParseException {
         connection = new MongoDbConnector();
@@ -42,11 +46,14 @@ public class SentimentEngine {
         tweets = new ArrayList<>();
         analyzer = new SentimentAnalyser();
         sessionScores = new ArrayList<>();
+        sM = new SentimentManager();
 //        loadTweets();
 //        printSentiment();
 //        System.out.println(items.count());
 //        calculateAveragePolarity(sessionScores);
-//        printDates();
+        //       printDates();
+ //       saveScores();
+ //       sM.printScores();
         //       printTweets();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
 
@@ -57,11 +64,9 @@ public class SentimentEngine {
         Date start = simpleDateFormat.parse(date);
         Date end = new Date();
 
-        getTweetsBetween(start, end);
+ //       getTweetsBetween(start, end);
         //      getTweetsBetween(start, end);
         System.out.println(items.count());
-
-       
 
     }
 
@@ -74,7 +79,33 @@ public class SentimentEngine {
         for (DBObject bson : collection.find()) {
             if (bson != null) {
                 String tweet = (String) bson.get("tweet_text");
+
                 tweets.add(tweet);
+            }
+
+        }
+
+    }
+
+    public void saveScores() {
+
+        for (DBObject bson : items.find()) {
+            if (bson != null) {
+                //get the tweet
+                String tweet = (String) bson.get("tweet_text");
+                tweets.add(tweet);
+                double score = analyzer.calculateTweetPolarity(tweet);
+                // get the time
+                BasicDBObject bTweet = (BasicDBObject) bson;
+                ObjectId objectId = bTweet.getObjectId("_id");
+                long millis = objectId.getTime();
+                DateTime date = new DateTime(millis);
+                
+                
+                //create the sentimetn score and add
+                sentiment.SentimentScore singleScore = new SentimentScore(date, score);
+                sM.addScore(singleScore);
+
             }
 
         }
@@ -89,22 +120,24 @@ public class SentimentEngine {
             BasicDBObject tweet = (BasicDBObject) temp;
             ObjectId objectId = tweet.getObjectId("_id");
             long millis = objectId.getTime();
-            System.out.println(" created on " + new Date(millis));
+            DateTime date = new DateTime(millis);
+
+            System.out.println(" created on " + date);
         }
     }
 
-
     public void printSentiment() {
         for (String tweet : tweets) {
+            //           sentiment.SentimentScore= new sentiment.SentimentScore(tweet.g, s)
             double score = analyzer.calculateTweetPolarity(tweet);
             sessionScores.add(score);
             System.out.println(PreProcessor.normalizeTweet(tweet) + ", " + score);
         }
     }
 
-    private void getTweetsBetween(Date start,Date end) {
-  //      items.find({"created_at" : { $gte : new Date("2016-04-01") }}); mongo terminal
-        
+    private void getTweetsBetween(Date start, Date end) {
+        //      items.find({"created_at" : { $gte : new Date("2016-04-01") }}); mongo terminal
+
         BasicDBObject getQuery = new BasicDBObject();
         getQuery.put("created_at", new BasicDBObject("$gt", start).append("$lt", end));
         DBCursor cursor = items.find(getQuery);
@@ -118,6 +151,11 @@ public class SentimentEngine {
 //        for (String tweet : tweets) {
 //            System.out.println(tweet + "\n");
 //        }
+    }
+    
+    public  SentimentManager getSentimentManager()
+    {
+        return this.sM;
     }
 
     public void calculateAveragePolarity(List<Double> sc) {

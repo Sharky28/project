@@ -22,6 +22,9 @@ import java.util.logging.Logger;
 import javax.swing.JTextField;
 
 import javax.swing.table.DefaultTableModel;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import stock.StockDownloader;
 import stock.StockManager;
 
@@ -33,12 +36,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     GregorianCalendar startDate;
     GregorianCalendar endDate;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
-        
-        
+
         initComponents();
         jTable1.setVisible(false);
 
@@ -231,7 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else if (choice.equals("Nokia")) {
                 symbol = "";
             }
-            
+
 //        GregorianCalendar start2 = new GregorianCalendar(jDateChooser1.getCalendar().get(Calendar.YEAR),
 //                                                         jDateChooser1.getCalendar().get(Calendar.MONDAY), 
 //                                                         jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -285,7 +288,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        GregorianCalendar greg2Date = new GregorianCalendar(eyear,emonth,eday);
             stock.StockDownloader downloader = new StockDownloader();
             stock.StockManager manager = new StockManager();
-            
+
 //            JCalendar calender = new JCalendar(GregorianCalendar.getInstance());
 //            jDateChooser1 = new JDateChooser(calender, new Date(), "yy.MM.yy", null);
 //            GregorianCalendar cal = (GregorianCalendar)GregorianCalendar.getInstance();
@@ -297,34 +300,37 @@ public class MainFrame extends javax.swing.JFrame {
 //            cal2.set(jDateChooser2.getCalendar().get(GregorianCalendar.YEAR),jDateChooser2.getCalendar().get(GregorianCalendar.MONTH),
 //                    jDateChooser2.getCalendar().get(GregorianCalendar.DAY_OF_MONTH));
 //            jDateChooser2.setSelectableDateRange(new Date(), cal2.getTime());
-            
-            
-            String d1  = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
-            GregorianCalendar cal = manager.convertFromYMD(d1);
-            System.out.println(cal+"\n"+d1);
-            
-             String d2  = ((JTextField)jDateChooser2.getDateEditor().getUiComponent()).getText();
-            GregorianCalendar cal2 = manager.convertFromYMD(d1);
-            System.out.println(cal2+"\n"+d2);
-            
+           
+//
+//            String d1 = ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText();
+//            GregorianCalendar cals = manager.convertFromYMD(d1);
+//            System.out.println(cals + "\n" + d1);
+//            
+//             DateTimeFormatter formatter
+//                    = DateTimeFormat.forPattern("yy-MM-yy").withOffsetParsed();
+//            DateTime dateTime = formatter.parseDateTime(d1);
+//            GregorianCalendar cal = dateTime.toGregorianCalendar();
+//            System.out.println("using joda"+cal);
+//            
+//            String d2 = ((JTextField) jDateChooser2.getDateEditor().getUiComponent()).getText();
+//            GregorianCalendar cal2 = manager.convertFromYMD(d1);
+//            System.out.println(cal2 + "\n" + d2);
+
             GregorianCalendar sTemp = new GregorianCalendar(2016, 01, 01);
             System.out.println(sTemp);
             GregorianCalendar eTemp = new GregorianCalendar(2016, 04, 06);
             System.out.println(eTemp);
-            
-            
-            
-            
+          
             
             List<String> stockLines = downloader.downloadStocks(symbol, sTemp, eTemp, "d");
             List<stock.Stock> stocks = manager.getStocks(stockLines);
             Object[][] dataSet = manager.getData();
             String[] columnNames = manager.getColumnNames();
-            
+
             DefaultTableModel model = new DefaultTableModel(dataSet, columnNames);
             jTable1.setModel(model);
-        } catch (ParseException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            
         }
 
 

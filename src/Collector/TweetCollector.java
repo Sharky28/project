@@ -56,19 +56,16 @@ public class TweetCollector {
 
     }
 
-    public static List<Status> getTweets(String q) {
-//        Timer timer = new Timer();
-//        TimerTask hourlyTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                statuses = getTweets("Apple");
-//            }
-//        };
-//
-//// schedule the task to run starting now and then every hour...
-//        timer.schedule(hourlyTask, 0l, 1000 * 60 * 60);
+    public static List<Status> getTweets(final String q) {
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
+            
+            @Override
+            public void run() {
+ 
 
         long amountOfTweets = 0;
+       
 
         try {
 
@@ -133,7 +130,15 @@ public class TweetCollector {
 
         }
 
-        return statuses;
+       
+                      
+            }
+        };
+
+// schedule the task to run starting now and then every hour...
+        timer.schedule(hourlyTask, 0l, 1000 * 60 * 60 );
+         return statuses;
+        
     }
 
     public static List<Status> printTimeLine(String account) {
