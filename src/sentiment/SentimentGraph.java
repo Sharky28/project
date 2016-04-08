@@ -7,7 +7,6 @@ package sentiment;
 
 import Collector.SentimentEngine;
 import java.text.ParseException;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JScrollPane;
 import org.jfree.chart.ChartFactory;
@@ -17,17 +16,13 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-import stock.Stock;
-import stock.StockDownloader;
-import stock.StockManager;
+import org.joda.time.DateTime;
 
 /**
  *
  * @author sharmarke
  */
-public class SentimentGraph extends ApplicationFrame{
-    
-
+public class SentimentGraph extends ApplicationFrame {
 
     public SentimentGraph(String applicationTitle, String chartTitle) throws ParseException {
         super(applicationTitle);
@@ -45,16 +40,19 @@ public class SentimentGraph extends ApplicationFrame{
         setContentPane(chartPanel);
 
     }
-    
+
     private DefaultCategoryDataset createDataset() throws ParseException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-       SentimentEngine se = new SentimentEngine();
-       se.saveScores();
-       SentimentManager sm = se.getSentimentManager();
+        SentimentEngine se = new SentimentEngine();
+        se.saveScores();
+        SentimentManager sm = se.getSentimentManager();
+
+//        DateTime someTime = new DateTime();
+//        DateTime earliest = someTime.minusMinutes(5);
+ //       List<SentimentScore> scores = sm.getScoresForTweetsAfter(earliest);
         List<SentimentScore> scores = sm.getScores();
-        
-        String value ="";
+        String value = "";
 
         for (SentimentScore s : scores) {
 
@@ -67,15 +65,12 @@ public class SentimentGraph extends ApplicationFrame{
     public static void main(String[] args) throws ParseException {
         SentimentGraph chart = new SentimentGraph(
                 "Sentiment Chart",
-                "......");
+                "Sentiment");
 
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
         JScrollPane pane = new JScrollPane();
-//        pane.add(chart);
-//        pane.setVisible(true);
+
     }
 }
-
-

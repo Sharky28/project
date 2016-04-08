@@ -27,6 +27,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import stock.StockDownloader;
 import stock.StockManager;
+import sentiment.SentimentManager;
 
 /**
  *

@@ -87,6 +87,7 @@ public class TweetCollector {
                 query.setCount(TWEETS_PER_QUERY);// constant value of 100
                 query.setResultType(Query.ResultType.recent);
                 query.setLang("en");// only english tweets
+                
 
                 if (maxID != -1) {
                     query.setMaxId(maxID - 1);// so the first querys not set to previous max
