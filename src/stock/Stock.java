@@ -19,9 +19,9 @@ public class Stock {
 
     private Date date;
     private double open, high, low, close, adjustedClose;
-    private int volume;
+    private double volume;
 
-    public Stock(Date date, double open, double high, double low, double close, int volume, double adjustedClose) {
+    public Stock(Date date, double open, double high, double low, double close, double volume, double adjustedClose) {
         this.date = date;
         this.open = open;
         this.high = high;
@@ -87,7 +87,7 @@ public class Stock {
         return volume;
     }
 
-    public void setVolume(int v) {
+    public void setVolume(double v) {
         this.volume = v;
     }
 
@@ -107,5 +107,12 @@ public class Stock {
         DecimalFormat df = new DecimalFormat("#.###");
         return Double.valueOf(df.format(value));
     }
+
+    @Override
+    public String toString() {
+        return "Stock{" + "date=" + date + ", close=" + close + '}';
+    }
+    
+    
 
 }

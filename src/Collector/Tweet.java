@@ -5,8 +5,10 @@
  */
 package Collector;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import sentiment.SentimentAnalyser;
 
 /**
  *
@@ -18,9 +20,11 @@ public class Tweet {
  
     private String tweetTxt;
     
+    private SentimentAnalyser analyser ;
+    
     public Tweet ()
     {
-        
+      
     }
 
     public Date getDate() {
@@ -30,11 +34,13 @@ public class Tweet {
     public void setDate(Date date) {
         this.date = date;
     }
-//    
-//    public String getFormatedDate()
-//    {
-//     
-//    }
+    
+    public String getFormatedDate()
+    {
+     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+     String result = df.format(this.date);
+     return result;
+    }
 
     public String getTweetTxt() {
         return tweetTxt;
@@ -43,10 +49,21 @@ public class Tweet {
     public void setTweetTxt(String tweetTxt) {
         this.tweetTxt = tweetTxt;
     }
+    
+    public void setAnalyzer(SentimentAnalyser analyser)
+    {
+          analyser = new SentimentAnalyser();
+    }
+    
+    public double getSentiment()
+    {
+        String processedTweet = sentiment.PreProcessor.normalizeTweet(tweetTxt);
+        return analyser.calculateTweetPolarity(processedTweet);
+    }
 
     @Override
     public String toString() {
-        return "Tweet{" + "date=" + date.toString() + ", tweetTxt=" + tweetTxt + '}';
+        return "Tweet{" + "date=" + getFormatedDate() + ", tweetTxt=" + tweetTxt + '}';
     }
     
     

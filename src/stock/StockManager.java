@@ -51,7 +51,7 @@ public class StockManager {
             double high = Double.parseDouble(st.nextToken());
             double low = Double.parseDouble(st.nextToken());
             double close = Double.parseDouble(st.nextToken());
-            int volume = Integer.parseInt(st.nextToken());
+            double volume = Double.parseDouble(st.nextToken());
             double adjClose = Double.parseDouble(st.nextToken());
 
             Stock temp = new Stock(date, open, high, low, close, volume, adjClose);

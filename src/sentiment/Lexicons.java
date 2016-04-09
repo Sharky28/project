@@ -43,7 +43,7 @@ public class Lexicons {
             removeNegationsFromDict();
             loadIntensifiers();
             removeIntensifiersFromDict();
-            System.out.println("Loading files Successfull");
+   //         System.out.println("Loading files Successfull");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Please check files are in correct locations");
