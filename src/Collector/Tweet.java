@@ -17,14 +17,11 @@ import sentiment.SentimentAnalyser;
 public class Tweet {
 
     private Date date;
- 
+
     private String tweetTxt;
-    
-    private SentimentAnalyser analyser ;
-    
-    public Tweet ()
-    {
-      
+
+    public Tweet() {
+
     }
 
     public Date getDate() {
@@ -34,12 +31,11 @@ public class Tweet {
     public void setDate(Date date) {
         this.date = date;
     }
-    
-    public String getFormatedDate()
-    {
-     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-     String result = df.format(this.date);
-     return result;
+
+    public String getFormatedDate() {
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        String result = df.format(this.date);
+        return result;
     }
 
     public String getTweetTxt() {
@@ -49,25 +45,12 @@ public class Tweet {
     public void setTweetTxt(String tweetTxt) {
         this.tweetTxt = tweetTxt;
     }
-    
-    public void setAnalyzer(SentimentAnalyser analyser)
-    {
-          analyser = new SentimentAnalyser();
-    }
-    
-    public double getSentiment()
-    {
-        String processedTweet = sentiment.PreProcessor.normalizeTweet(tweetTxt);
-        return analyser.calculateTweetPolarity(processedTweet);
-    }
+
+  
 
     @Override
     public String toString() {
-        return "Tweet{" + "date=" + getFormatedDate() + ", tweetTxt=" + tweetTxt + '}';
+        return "Tweet{" + "date=" + date + ", tweetTxt=" + tweetTxt + '}';
     }
-    
-    
-    
-    
-    
+
 }

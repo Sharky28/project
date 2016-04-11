@@ -22,7 +22,7 @@ import java.util.Scanner;
 public class StockDownloader {
 
     private  List<String> stockLines;
-    private final String pathToNyse = "http://real-chart.finance.yahoo.com/table.csv?s=%5ENYA&a=03&b=06&c=2009&d=04&e=9&f=2009&g=d&ignore=.csv";
+    private final String pathToNyse = "http://real-chart.finance.yahoo.com/table.csv?s=%5ENYA&a=03&b=06&c=2009&d=06&e=9&f=2009&g=d&ignore=.csv";
 
     public StockDownloader() {
         stockLines = new ArrayList<>();

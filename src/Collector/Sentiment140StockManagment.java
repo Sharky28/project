@@ -5,73 +5,84 @@
  */
 package Collector;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+import com.opencsv.CSVReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.joda.time.DateTime;
 import sentiment.SentimentAnalyser;
+import sentiment.SentimentScore;
 import stock.Stock;
 import stock.StockDownloader;
 import stock.StockManager;
 
-/**
- *
- * @author sharmarke
- */
 public class Sentiment140StockManagment {
 
     private stock.StockDownloader downloader;
     private stock.StockManager manager;
     private Sentiment140 tweetsManager;
+    CSVReader reader;
 
-    public Sentiment140StockManagment() {
-      
-            downloader = new StockDownloader();
-            manager = new StockManager();
-            tweetsManager = new Sentiment140();
+    public Sentiment140StockManagment() throws IOException {
+
+                downloader = new StockDownloader();
+                manager = new StockManager();
+        tweetsManager = new Sentiment140();
 //        GregorianCalendar start = new GregorianCalendar(2009, 04, 06);
 //        GregorianCalendar end = new GregorianCalendar(2009, 05, 06);
 
- //           buildCsv();
-          getSentimentForEachDay();
-
+        //           buildCsv();
+        //         getSentimentForEachDay();
+  //      calculateTweets();
+      calculateAverages();
 //        for (Stock downloadedStockObject : downloadedStockObjects) {
 //            System.out.println(downloadedStockObject.toString());
 //    
-        
     }
 
-    public void buildCsv() {
-        List<String> downloadedStocksStrings = downloader.downloadNYSE();
-        List<stock.Stock> downloadedStockObjects = manager.getStocks(downloadedStocksStrings);
-        List<Tweet> tweets = tweetsManager.getTweetObjects();
-
-        List<SentiStockScore> sentiscores = new ArrayList<>();
-        for (Stock stock : downloadedStockObjects) {
-            List<Double> tempScores = new ArrayList<>();
-            Date stockdate = stock.getDate();
-            for (Tweet tweet : tweets) {
-                if (tweet.getDate().equals(stockdate)) {
-                    double score = tweet.getSentiment();
-                    tempScores.add(score);
-                    double avg = calculateAveragePolarity(tempScores);
-                    SentiStockScore csvLine = new SentiStockScore();
-                    csvLine.setDate(stockdate);
-                    csvLine.setSentimentPolarity(avg);
-                    csvLine.setClosingPrice(stock.getClose());
-                    sentiscores.add(csvLine);
-                }
-            }
-        }
-        System.out.println(sentiscores.size());
-
-        System.out.println(sentiscores);
-
-        //      String[] lines = new String[downloadedStockObjects.size()];
+//    public void buildCsv() {
+//        List<String> downloadedStocksStrings = downloader.downloadNYSE();
+//        List<stock.Stock> downloadedStockObjects = manager.getStocks(downloadedStocksStrings);
+//        List<Tweet> tweets = tweetsManager.getTweetObjects();
+//
+//        List<SentiStockScore> sentiscores = new ArrayList<>();
+//        for (Stock stock : downloadedStockObjects) {
+//            List<Double> tempScores = new ArrayList<>();
+//            Date stockdate = stock.getDate();
+//            for (Tweet tweet : tweets) {
+//                if (tweet.getDate().equals(stockdate)) {
+//                    double score = tweet.getSentiment();
+//                    tempScores.add(score);
+//                    double avg = calculateAveragePolarity(tempScores);
+//                    SentiStockScore csvLine = new SentiStockScore();
+//                    csvLine.setDate(stockdate);
+//                    csvLine.setSentimentPolarity(avg);
+//                    csvLine.setClosingPrice(stock.getClose());
+//                    sentiscores.add(csvLine);
+//                }
+//            }
+//        }
+//        System.out.println(sentiscores.size());
+//
+//        System.out.println(sentiscores);
+    //      String[] lines = new String[downloadedStockObjects.size()];
 //        for (int i = 0; i < downloadedStockObjects.size(); i++) {
 //
 //            Stock stock = downloadedStockObjects.get(i);
@@ -88,40 +99,37 @@ public class Sentiment140StockManagment {
 //            }
 //
 //        }
-    }
+//    }
+    public void calculateTweets() {
 
-    public void getSentimentForEachDay() {
         List<Tweet> tweets = tweetsManager.getTweetObjects();
-        sentiment.SentimentAnalyser sa = new SentimentAnalyser();
-        
+        List<sentiment.SentimentScore> scores = new ArrayList<>();
+        SentimentAnalyser analyser = new SentimentAnalyser();
+
         for (Tweet tweet : tweets) {
-            double score = sa.calculateTweetPolarity(tweet.getTweetTxt());
-    //        System.out.println(score);
+            DateTime date = new DateTime(tweet.getDate());
+            double score = analyser.calculateTweetPolarity(sentiment.PreProcessor.normalizeTweet(tweet.getTweetTxt()));
+            scores.add(new SentimentScore(date, score));
         }
+
+        System.out.println(scores.size());
+
+//        Map<DateTime, List<SentimentScore>> map = new HashMap<DateTime, List<SentimentScore>>();
+//        for (SentimentScore item : scores) {
+//            List<SentimentScore> list = map.get(item.getTime());
+//            if (list == null) {
+//                list = new ArrayList<SentimentScore>();
+//                map.put(item.getTime(), list);
+//            }
+//            list.add(item);
+//            System.out.println(list.size());
+//        }
     }
 
-    public void buildcsv2() {
+    public void makeStockCsv() {
         List<String> downloadedStocksStrings = downloader.downloadNYSE();
         List<stock.Stock> downloadedStockObjects = manager.getStocks(downloadedStocksStrings);
-         List<Tweet> tweets = tweetsManager.getTweetObjects();
-
-        List<Date> stockDates = new ArrayList<>();
-        for (Stock stock : downloadedStockObjects) {
-            stockDates.add(stock.getDate());
-        }
-
-        List<Double> tempScores = new ArrayList<>();
-        String line = "";
-        for (Tweet tweet : tweets) {
-            if (stockDates.contains(tweet.getDate())) {
-                double score = tweet.getSentiment();
-                tempScores.add(score);
-                double avg = calculateAveragePolarity(tempScores);
-                System.out.println(tweet.getDate() + "," + avg);
-
-            }
-        }
-
+        
     }
 
     public double calculateAveragePolarity(List<Double> sc) {
@@ -135,8 +143,37 @@ public class Sentiment140StockManagment {
         return avg;
         //       System.out.println("Average :" + avg);
     }
+    
+    public void calculateAverages()
+    {
+         List<Tweet> tweets = tweetsManager.getTweetObjects();
+        List<sentiment.SentimentScore> scores = new ArrayList<>();
+        SentimentAnalyser analyser = new SentimentAnalyser();
 
-    public static void main(String[] args) {
+        for (Tweet tweet : tweets) {
+            DateTime date = new DateTime(tweet.getDate());
+            double score = analyser.calculateTweetPolarity(sentiment.PreProcessor.normalizeTweet(tweet.getTweetTxt()));
+            scores.add(new SentimentScore(date, score));
+        }
+        
+         System.out.println(scores.size());
+        
+        List<DateTime> dates = new ArrayList<>();
+        Set<DateTime> set = new HashSet<DateTime>(dates);
+        for (SentimentScore score : scores) {
+            
+            dates.add(score.getTime());
+            set.add(score.getTime());
+        }
+        
+        System.out.println(dates.size());
+        System.out.println(set.size());
+
+       
+        
+    }
+
+    public static void main(String[] args) throws IOException {
         Sentiment140StockManagment sm = new Sentiment140StockManagment();
 
         //      sm.manager.showStocks();
