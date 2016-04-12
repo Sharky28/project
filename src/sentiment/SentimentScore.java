@@ -5,6 +5,9 @@
  */
 package sentiment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.joda.time.DateTime;
 
 /**
@@ -14,6 +17,7 @@ import org.joda.time.DateTime;
 public class SentimentScore {
     
     private DateTime time;
+    private final DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private double score;
     
     
@@ -21,6 +25,13 @@ public class SentimentScore {
         time=t;
         score=s;
         
+    }
+
+    @Override
+    public String toString() {
+        Date d = time.toDate();
+        String formatedDate = formatter.format(d);
+        return "SentimentScore{" + "time=" + time+ ", score=" + score + '}';
     }
 
     public DateTime getTime() {

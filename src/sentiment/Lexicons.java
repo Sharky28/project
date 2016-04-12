@@ -25,9 +25,9 @@ public class Lexicons {
     private String negationsFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\negations.txt";
     private String intensifiersFile = "C:\\Users\\sharmarke\\OneDrive\\Documents\\year 3\\Project\\TwitterTest\\Twitterfiles\\intensifiers.txt";
 
-    Map<String, Double> dictionary;
-    List<String> negations;
-    static Map<String, Double> intensifiers;
+    private Map<String, Double> dictionary;
+    private List<String> negations;
+    private  Map<String, Double> intensifiers;
 
     private final SWN3 swn;
 

@@ -24,8 +24,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class StockGraph extends ApplicationFrame {
 
-    public StockGraph(String applicationTitle, String chartTitle) {
-        super(applicationTitle);
+    public StockGraph(String FrameTitle, String chartTitle) {
+        super(FrameTitle);
         JFreeChart lineChart = ChartFactory.createLineChart(
                 chartTitle,
                 "Date", "Price",

@@ -7,12 +7,11 @@
 package stock;
 
 import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -25,8 +24,8 @@ public class StockManager {
     private List<Stock> stocks;
 
     private String[] columnNames = {"Date", "Open", "High", "Low", "Close", "Volume", "AdjClose"};
-    
-     static SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+
+ //   private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 
     public StockManager() {
 
@@ -86,29 +85,5 @@ public class StockManager {
         }
         return table;
     }
-    
-//    public static GregorianCalendar convertFromYMD(String yy_mm_dd) throws ParseException{
-//
-//        // this actually works, got rid of the original code idea
-//        String[] splitDate = yy_mm_dd.split("-");
-//        int year = Integer.parseInt(splitDate[0]);
-//        int month = (Integer.parseInt(splitDate[1]) - 1);
-//        int days = Integer.parseInt(splitDate[2]);
-//        
-//
-//        // dates go in properly
-//        GregorianCalendar dateConverted = new GregorianCalendar(year, month, days);
-//        String finalDate = format(dateConverted);
-//        return dateConverted;
-//    }
-    
-//     public static String format(GregorianCalendar date) throws ParseException{
-//
-//       fmt.setCalendar(date);
-//        String dateFormatted = fmt.format(date.getTime());
-//   //     System.out.println(dateFormatted);
-//        return dateFormatted;
-//    }
-    
 
 }

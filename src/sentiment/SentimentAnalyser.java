@@ -35,7 +35,7 @@ public class SentimentAnalyser {
     public double calculateTweetPolarity(String tweet) {
 
         double score = 0.0d;
-        double neg = 1.0;
+        double negator = 1.0;
         int intens = 0;
         double[] intensifierarray = new double[20];
 
@@ -54,12 +54,12 @@ public class SentimentAnalyser {
                     intensifierarray[a] = 0.0; // empty the array so as to not influence later features
                 }
                 // always multiply by the value of neg , should be 1.0 if no negations found
-                score = score + (neg * lexicon.getDictionary().get(nextWord));
-                neg = 1;//ensures it stays one
+                score = score + (negator * lexicon.getDictionary().get(nextWord));
+                negator = 1;//ensures it stays one
 
             } else if (lexicon.getNegations().contains(nextWord)) {
                 //negation found so make the value of neg a negative
-                neg = (-1.0) * neg;
+                negator = (-1.0) * negator;
             }
         }
         // collects all scores in order to calculate average
