@@ -6,10 +6,12 @@
 package sentiment;
 
 import com.google.common.collect.Lists;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.axis.DateTick;
 import org.joda.time.DateTime;
+import views.SentimentGraph;
 
 /**
  *
@@ -53,6 +55,8 @@ public class SentimentManager {
         return newList;
 
     }
+    
+  
 
     public Object[][] getData() {
 

@@ -5,7 +5,7 @@
  */
 package views;
 
-import Collector.SentimentEngine;
+import sentiment.SentimentEngine;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.JScrollPane;
@@ -63,7 +63,7 @@ public class SentimentGraph extends ApplicationFrame {
         }
         return dataset;
     }
-
+     
     public static void main(String[] args) throws ParseException {
         SentimentGraph chart = new SentimentGraph(
                 "Sentiment Chart",

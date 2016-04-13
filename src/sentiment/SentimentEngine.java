@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package sentiment;
 
+import Collector.MongoDbConnector;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBCollection;
@@ -14,6 +15,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,25 +49,23 @@ public class SentimentEngine {
         analyzer = new SentimentAnalyser();
         sessionScores = new ArrayList<>();
         sM = new SentimentManager();
-//        loadTweets();
-//        printSentiment();
-//        System.out.println(items.count());
-//        calculateAveragePolarity(sessionScores);
+        
+        loadTweets();
+        printSentiment();
+        calculateAveragePolarity(sessionScores);
         //       printDates();
- //       saveScores();
- //       sM.printScores();
+        //       saveScores();
+        //       sM.printScores();
         //       printTweets();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
 
 //        Date start = new java.util.Date(2016-1900, 3, 1);
 //        Date end = new java.util.Date(2016-1900, 03, 7);
-        String date = "2016.04.01";
-        String date1 = "2016.04.07";
-        Date start = simpleDateFormat.parse(date);
-        Date end = new Date();
+//        String date = "2016.04.01";
+//        String date1 = "2016.04.07";
+//        Date start = simpleDateFormat.parse(date);
+//        Date end = new Date();
 
- //       getTweetsBetween(start, end);
-        //      getTweetsBetween(start, end);
         System.out.println(items.count());
 
     }
@@ -100,8 +100,7 @@ public class SentimentEngine {
                 ObjectId objectId = bTweet.getObjectId("_id");
                 long millis = objectId.getTime();
                 DateTime date = new DateTime(millis);
-                
-                
+
                 //create the sentimetn score and add
                 sentiment.SentimentScore singleScore = new SentimentScore(date, score);
                 sM.addScore(singleScore);
@@ -146,15 +145,7 @@ public class SentimentEngine {
         }
     }
 
-    public void printTweets() {
-//
-//        for (String tweet : tweets) {
-//            System.out.println(tweet + "\n");
-//        }
-    }
-    
-    public  SentimentManager getSentimentManager()
-    {
+    public SentimentManager getSentimentManager() {
         return this.sM;
     }
 
@@ -166,7 +157,9 @@ public class SentimentEngine {
         }
         double avg = 0.0;
         avg = sum / scores.size();
-        System.out.println("Average :" + avg);
+        DecimalFormat df = new DecimalFormat("#.###");
+        double formatedAvg = Double.valueOf(df.format(avg));
+        System.out.println("Average :" + formatedAvg);
     }
 
 }

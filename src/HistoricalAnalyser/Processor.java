@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package HistoricalAnalyser;
 
 import com.opencsv.CSVReader;
 import java.io.FileNotFoundException;
@@ -45,20 +45,6 @@ public class Processor {
     public Processor() throws ParseException, IOException {
         scores = new ArrayList<>();
 
-//        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-//        DateTime dt = new DateTime();
-//        String datetime = dtf.print(dt);
-        //       System.out.println(datetime);
-        String dateTime = "11/15/2013 08:00:00";
-// Format for input
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
-// Parsing the date
-        DateTime jodatime = dtf.parseDateTime(dateTime);
-// Format for output
-        DateTimeFormatter dtfOut = DateTimeFormat.forPattern("MM/dd/yyyy");
-// Printing the date
-        System.out.println(dtfOut.print(jodatime));
-        
         loadScores();
 
         System.out.println(scores.size());

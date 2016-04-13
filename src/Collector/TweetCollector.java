@@ -104,11 +104,10 @@ public class TweetCollector {
                     }
                     storeTweet(s);// where stored in db
 
-                    System.out.printf("At%s , @%-20s said : %s\n", // debugging purposes
+                    System.out.printf("At%s : %s\n", // debugging purposes
                             s.getCreatedAt().toString(),
-                            s.getUser().getScreenName(),
                             s.getText());
-                    searchLimit = result.getRateLimitStatus();
+                    searchLimit = result.getRateLimitStatus(); //resets
                     System.out.printf("\n\nA total of %d tweet retrieved\n", amountOfTweets);
 
                 }

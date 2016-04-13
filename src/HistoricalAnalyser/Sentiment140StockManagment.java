@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package HistoricalAnalyser;
 
+import Collector.Tweet;
+import HistoricalAnalyser.Sentiment140;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.opencsv.CSVReader;
@@ -50,13 +52,15 @@ public class Sentiment140StockManagment {
 
         //           buildCsv();
         //         getSentimentForEachDay();
-  //      calculateTweets();
-      calculateAverages();
+  ////      calculateTweets();
+//      calculateAverages();
+        makeStockCsv();
 //        for (Stock downloadedStockObject : downloadedStockObjects) {
 //            System.out.println(downloadedStockObject.toString());
 //    
     }
 
+  
 //    public void buildCsv() {
 //        List<String> downloadedStocksStrings = downloader.downloadNYSE();
 //        List<stock.Stock> downloadedStockObjects = manager.getStocks(downloadedStocksStrings);
@@ -129,6 +133,10 @@ public class Sentiment140StockManagment {
     public void makeStockCsv() {
         List<String> downloadedStocksStrings = downloader.downloadNYSE();
         List<stock.Stock> downloadedStockObjects = manager.getStocks(downloadedStocksStrings);
+        
+        for (Stock downloadedStockObject : downloadedStockObjects) {
+            System.out.println(downloadedStockObject.getClose());
+        }
         
     }
 

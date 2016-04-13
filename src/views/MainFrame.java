@@ -236,86 +236,10 @@ public class MainFrame extends javax.swing.JFrame {
                 symbol = "";
             }
 
-//        GregorianCalendar start2 = new GregorianCalendar(jDateChooser1.getCalendar().get(Calendar.YEAR),
-//                                                         jDateChooser1.getCalendar().get(Calendar.MONDAY), 
-//                                                         jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH));
-//
-//         GregorianCalendar end2 = new GregorianCalendar(jDateChooser2.getCalendar().get(Calendar.YEAR),
-//                                                         jDateChooser2.getCalendar().get(Calendar.MONDAY), 
-//                                                         jDateChooser2.getCalendar().get(Calendar.DAY_OF_MONTH));
-            //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            //       String date = ((JTextField)jDateChooser1.getDateEditor().getUiComponent()).getText();
-//        Date startTemp = jDateChooser1.getDate();
-//        int year = startTemp.getYear();
-//        int month = startTemp.getMonth();
-//        int day = startTemp.getDate();
-//
-//        GregorianCalendar start = new GregorianCalendar(year, month, day);
-//
-//        Calendar cal = jDateChooser1.getCalendar();
-//        Date tempDate =cal.getTime();
-//        Date endTemp = jDateChooser2.getDate();
-//        
-//        GregorianCalendar temp = (GregorianCalendar) cal;
-//        int endyear = (endTemp.getYear()) + 1900;
-//        int endmonth = endTemp.getMonth() + 1;
-//        int endday = endTemp.getDate();
-//
-//        GregorianCalendar end = new GregorianCalendar(endyear, endmonth, endday);
-//
-//        System.out.println(start.toString() + "\n" + end.toString());
-//
-//        //       System.out.println(year + "," + month + "," + day);
-//        System.out.println(endyear + "," + endmonth + "," + endday);
-//        Calendar cal1 =  new GregorianCalendar();
-//        cal1.setTime(jDateChooser1.getDate());
-//      
-//        int year = cal1.get(Calendar.YEAR);
-//        int month = cal1.get(Calendar.MONTH);
-//        int day = cal1.get(Calendar.DAY_OF_MONTH);
-//        //      System.out.println(startDate+"\n"+ startDate.getYear()+","+startDate.getMonth()+","+startDate.getDate()
-//        //     +"\n"+ startDate.toString());
-//
-//        GregorianCalendar gregDate = new GregorianCalendar(year,month,day);
-//     
-//        //      System.out.println(gregDate.toString());
-//        Calendar cal2 = new GregorianCalendar();
-//        cal2.setTime(jDateChooser2.getDate());
-//        
-//        int eyear = cal2.get(Calendar.YEAR);
-//        int emonth = cal2.get(Calendar.MONTH);
-//        int eday = cal2.get(Calendar.DAY_OF_MONTH);
-//
-//        GregorianCalendar greg2Date = new GregorianCalendar(eyear,emonth,eday);
             stock.StockDownloader downloader = new StockDownloader();
             stock.StockManager manager = new StockManager();
 
-//            JCalendar calender = new JCalendar(GregorianCalendar.getInstance());
-//            jDateChooser1 = new JDateChooser(calender, new Date(), "yy.MM.yy", null);
-//            GregorianCalendar cal = (GregorianCalendar)GregorianCalendar.getInstance();
-//            cal.set(jDateChooser1.getCalendar().get(GregorianCalendar.YEAR),jDateChooser1.getCalendar().get(GregorianCalendar.MONTH),
-//                    jDateChooser1.getCalendar().get(GregorianCalendar.DAY_OF_MONTH));
-//            jDateChooser1.setSelectableDateRange(new Date(), cal.getTime());
-////            
-//            GregorianCalendar cal2 = (GregorianCalendar)GregorianCalendar.getInstance();
-//            cal2.set(jDateChooser2.getCalendar().get(GregorianCalendar.YEAR),jDateChooser2.getCalendar().get(GregorianCalendar.MONTH),
-//                    jDateChooser2.getCalendar().get(GregorianCalendar.DAY_OF_MONTH));
-//            jDateChooser2.setSelectableDateRange(new Date(), cal2.getTime());
-           
-//
-//            String d1 = ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText();
-//            GregorianCalendar cals = manager.convertFromYMD(d1);
-//            System.out.println(cals + "\n" + d1);
-//            
-//             DateTimeFormatter formatter
-//                    = DateTimeFormat.forPattern("yy-MM-yy").withOffsetParsed();
-//            DateTime dateTime = formatter.parseDateTime(d1);
-//            GregorianCalendar cal = dateTime.toGregorianCalendar();
-//            System.out.println("using joda"+cal);
-//            
-//            String d2 = ((JTextField) jDateChooser2.getDateEditor().getUiComponent()).getText();
-//            GregorianCalendar cal2 = manager.convertFromYMD(d1);
-//            System.out.println(cal2 + "\n" + d2);
+
 
             GregorianCalendar sTemp = new GregorianCalendar(2016, 01, 01);
             System.out.println(sTemp);
@@ -338,7 +262,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+      
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

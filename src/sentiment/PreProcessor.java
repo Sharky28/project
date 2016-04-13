@@ -16,7 +16,7 @@ public class PreProcessor {
         String s = tweet;
         s = s.replaceAll("https?://\\S+\\s?", "") // removes http / https
                 .replaceAll("ftps?://\\S+\\s?", "") // removes ftp / ftps
-                .replaceAll("@\\w+|#\\w+|\\bRT\\b", "") // removes hash tags and RT and words after
+                .replaceAll("@\\w+|#\\w+|\\bRT\\b", "") // removes hash tags @ ,signs and RT and words after
                 .replaceAll("\n", " ")// removes empty lines
                 .replaceAll("[^\\p{L}\\p{N} ]+", " ") // removes numbers
                 .replaceAll(" +", " ")// removes double spacing
