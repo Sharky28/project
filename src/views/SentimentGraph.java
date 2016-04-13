@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sentiment;
+package views;
 
 import Collector.SentimentEngine;
 import java.text.ParseException;
@@ -17,6 +17,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 import org.joda.time.DateTime;
+import sentiment.SentimentManager;
+import sentiment.SentimentScore;
 
 /**
  *

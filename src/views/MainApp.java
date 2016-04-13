@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package views;
 
+import Collector.TweetCollector;
 import sentiment.PreProcessor;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stock;
+package views;
 
 /**
  *
@@ -21,6 +21,9 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import stock.Stock;
+import stock.StockDownloader;
+import stock.StockManager;
 
 public class StockGraph extends ApplicationFrame {
 

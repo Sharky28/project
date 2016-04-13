@@ -21,6 +21,8 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sentiment.SentimentAnalyser;
+import sentiment.SentimentScore;
 import stock.Stock;
 
 /**
@@ -39,6 +41,7 @@ public class Sentiment140 {
         tweets = new ArrayList<Tweet>();
 //              loadTweets();
       loadTweets2();
+      createNewCsv2();
 //              createNewCsv();
     }
 
@@ -99,13 +102,13 @@ public class Sentiment140 {
 
             while ((record = reader.readNext()) != null) {
                 String dateString = record[0];
- //               System.out.println(dateString);
+//                System.out.println(dateString);
                 String tweet = record[1];
                 Tweet tObject = new Tweet();              
                 Date date = formatter.parse(dateString);
                 tObject.setDate(date);
                 tObject.setTweetTxt(tweet);
-//                System.out.println(tObject.toString());
+//               System.out.println(tObject.toString());
                 tweets.add(tObject);
 
             }
@@ -114,6 +117,30 @@ public class Sentiment140 {
         } catch (ParseException ex) {
             Logger.getLogger(Sentiment140.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+    
+        public void createNewCsv2() throws IOException {
+
+        FileWriter pw = new FileWriter("C:\\Users\\sharmarke\\Documents\\data6.csv");
+        Iterator s = tweets.iterator();
+        if (s.hasNext() == false) {
+            System.out.println("Empty");
+        }
+        SentimentAnalyser analyzer= new sentiment.SentimentAnalyser();
+        
+        while (s.hasNext()) {
+            Tweet current = (Tweet) s.next();
+            
+            double score= analyzer.calculateTweetPolarity(current.getTweetTxt());
+ //           System.out.println(current.toString() + "\n");
+            pw.append(current.getDate().toString());
+            pw.append(",");
+            pw.append(String.valueOf(score));
+            pw.append("\n");
+        }
+        pw.flush();
+        pw.close();
 
     }
 
@@ -125,6 +152,8 @@ public class Sentiment140 {
 //    {
 //         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 //    }
+    
+    
 
     public static void main(String[] args) throws IOException {
         Sentiment140 s = new Sentiment140();

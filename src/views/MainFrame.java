@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Collector;
+package views;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;

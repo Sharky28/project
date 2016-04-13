@@ -24,9 +24,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.*;
-import sentiment.DateSorter;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 
 /**
  *
@@ -42,7 +45,22 @@ public class Processor {
     public Processor() throws ParseException, IOException {
         scores = new ArrayList<>();
 
+//        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+//        DateTime dt = new DateTime();
+//        String datetime = dtf.print(dt);
+        //       System.out.println(datetime);
+        String dateTime = "11/15/2013 08:00:00";
+// Format for input
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
+// Parsing the date
+        DateTime jodatime = dtf.parseDateTime(dateTime);
+// Format for output
+        DateTimeFormatter dtfOut = DateTimeFormat.forPattern("MM/dd/yyyy");
+// Printing the date
+        System.out.println(dtfOut.print(jodatime));
+        
         loadScores();
+
         System.out.println(scores.size());
         //      sorter();
         //    calculateAverages();
@@ -59,9 +77,9 @@ public class Processor {
             while ((record = reader.readNext()) != null) {
                 String dateString = record[0];
                 Date date = formatter.parse(dateString);
-                DateTime correctDate = new DateTime(date);
+//                DateTime correctDate = new DateTime(date);
                 double value = Double.parseDouble(record[1]);
-                SentimentScore score = new SentimentScore(correctDate, value);
+                SentimentScore score = new SentimentScore(date, value);
                 //       System.out.println(score.getScore());
                 scores.add(score);
 
@@ -97,13 +115,7 @@ public class Processor {
 
     }
 
-    public void sorter() {
-
-        sentiment.DateSorter dateSort = new DateSorter();
-        Collections.sort(scores, dateSort);
-        printScoreDetails(scores);
-
-    }
+    
 
     public void getAvg() {
         Map<DateTime, Double> collect = scores.stream().collect(
@@ -116,16 +128,18 @@ public class Processor {
         //            System.out.println( val);
         //        }
 
-       
         for (Map.Entry<DateTime, Double> entry : collect.entrySet()) {
-           DateTime date = entry.getKey();
-           double score = entry.getValue();
-           
-            System.err.println("date: "+ date.toString()+ ", avg :"+ score);
-        }
-        }
+            long date = entry.getKey().getMillis();
+            double score = entry.getValue();
+            Date f = new Date(date);
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
+            
+            
+            
 
-    
+            System.err.println("date: " + df.format(f) + ", avg :" + score);
+        }
+    }
 
     public void printScoreDetails(List<SentimentScore> scores) {
         for (SentimentScore score : scores) {

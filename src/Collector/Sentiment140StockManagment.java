@@ -108,7 +108,7 @@ public class Sentiment140StockManagment {
 
         for (Tweet tweet : tweets) {
             DateTime date = new DateTime(tweet.getDate());
-            double score = analyser.calculateTweetPolarity(sentiment.PreProcessor.normalizeTweet(tweet.getTweetTxt()));
+            double score = analyser.calculateTweetPolarity(tweet.getTweetTxt());
             scores.add(new SentimentScore(date, score));
         }
 
@@ -152,7 +152,7 @@ public class Sentiment140StockManagment {
 
         for (Tweet tweet : tweets) {
             DateTime date = new DateTime(tweet.getDate());
-            double score = analyser.calculateTweetPolarity(sentiment.PreProcessor.normalizeTweet(tweet.getTweetTxt()));
+            double score = analyser.calculateTweetPolarity(tweet.getTweetTxt());
             scores.add(new SentimentScore(date, score));
         }
         

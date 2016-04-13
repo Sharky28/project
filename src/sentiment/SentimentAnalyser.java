@@ -18,8 +18,10 @@ public class SentimentAnalyser {
 
     private Lexicons lexicon;
     private List<Double> sessionScores;
+    private PreProcessor processor;
 
     public SentimentAnalyser() {
+        processor = new PreProcessor();
         lexicon = new Lexicons();
         sessionScores = new ArrayList<Double>();
     }
@@ -32,8 +34,10 @@ public class SentimentAnalyser {
         this.lexicon = lex;
     }
 
-    public double calculateTweetPolarity(String tweet) {
+    public  double calculateTweetPolarity(String unProcessedTweet) {
 
+       String tweet = processor.normalizeTweet(unProcessedTweet);
+        
         double score = 0.0d;
         double negator = 1.0;
         int intens = 0;
