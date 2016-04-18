@@ -5,7 +5,6 @@
  */
 package sentiment;
 
-import com.sun.org.apache.xpath.internal.patterns.NodeTest;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -15,18 +14,11 @@ import java.util.Set;
 
 /**
  *
- * @author sharmarke
+ * @author http://lukejia-svn.googlecode.com/svn/trunk/sfe-fyp/src/ie/dit/comp/lukejia/fyp/swn/SWN3.java
  */
 public class SWN3 {
 
     private HashMap<String, Double> _dict;
-//    public static final String STR_POS = "strong_positive";
-//    public static final String POS = "positive";
-//    public static final String WEK_POS = "weak_positive";
-//    public static final String STR_NEG = "strong_negative";
-//    public static final String NEG = "negative";
-//    public static final String WEK_NEG = "weak_negative";
-//    public static final String NU = "";
 
     public SWN3(String pathToSWN) {
 

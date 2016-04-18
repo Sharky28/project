@@ -42,7 +42,7 @@ public class Sentiment140 {
         tweets = new ArrayList<Tweet>();
 //              loadTweets();
       loadTweets2();
-      createNewCsv2();
+//      createNewCsv2();
 //              createNewCsv();
     }
 
@@ -109,7 +109,7 @@ public class Sentiment140 {
                 Date date = formatter.parse(dateString);
                 tObject.setDate(date);
                 tObject.setTweetTxt(tweet);
-//               System.out.println(tObject.toString());
+ //             System.out.println(tObject.toString());
                 tweets.add(tObject);
 
             }

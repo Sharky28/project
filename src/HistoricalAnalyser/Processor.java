@@ -63,7 +63,6 @@ public class Processor {
             while ((record = reader.readNext()) != null) {
                 String dateString = record[0];
                 Date date = formatter.parse(dateString);
-//                DateTime correctDate = new DateTime(date);
                 double value = Double.parseDouble(record[1]);
                 SentimentScore score = new SentimentScore(date, value);
                 //       System.out.println(score.getScore());
@@ -108,21 +107,11 @@ public class Processor {
                 Collectors.groupingBy(SentimentScore::getTime,
                         Collectors.averagingDouble(SentimentScore::getScore)));
 
-        Collection<Double> col = collect.values();
-        //        for (Double val : col) {
-        //            
-        //            System.out.println( val);
-        //        }
-
         for (Map.Entry<DateTime, Double> entry : collect.entrySet()) {
             long date = entry.getKey().getMillis();
             double score = entry.getValue();
             Date f = new Date(date);
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
-            
-            
-            
-
             System.err.println("date: " + df.format(f) + ", avg :" + score);
         }
     }

@@ -113,6 +113,18 @@ public class Stock {
         return "Stock{" + "date=" + date + ", close=" + close + '}';
     }
     
+    public String getFullToString()
+    {
+         return "Date :" + getDate().toString()
+                    + "\nOpen :" +getOpen()
+                    + "\nClose :" + getClose()
+                    + "\nHigh :" + getHigh()
+                    + "\nLow :" + getLow()
+                    + "\nVolume :" + getVolume()
+                    + "\nAdjusted Close :" + getAdjustedClose()
+                    + "\n*******************";
+    }
+    
     
 
 }

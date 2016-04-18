@@ -62,14 +62,7 @@ public class StockManager {
 
     public void showStocks() {
         for (Stock stock : stocks) {
-            System.out.println("Date :" + stock.getDate().toString()
-                    + "\nOpen :" + stock.getOpen()
-                    + "\nClose :" + stock.getClose()
-                    + "\nHigh :" + stock.getHigh()
-                    + "\nLow :" + stock.getLow()
-                    + "\nVolume :" + stock.getVolume()
-                    + "\nAdjusted Close :" + stock.getAdjustedClose()
-                    + "\n*******************");
+            System.out.println(stock.getFullToString());
         }
     }
 

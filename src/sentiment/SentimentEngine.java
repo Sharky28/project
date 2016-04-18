@@ -53,19 +53,6 @@ public class SentimentEngine {
         loadTweets();
         printSentiment();
         calculateAveragePolarity(sessionScores);
-        //       printDates();
-        //       saveScores();
-        //       sM.printScores();
-        //       printTweets();
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
-
-//        Date start = new java.util.Date(2016-1900, 3, 1);
-//        Date end = new java.util.Date(2016-1900, 03, 7);
-//        String date = "2016.04.01";
-//        String date1 = "2016.04.07";
-//        Date start = simpleDateFormat.parse(date);
-//        Date end = new Date();
-
         System.out.println(items.count());
 
     }
